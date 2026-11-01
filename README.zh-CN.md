@@ -15,7 +15,7 @@
 
 ## 为什么做这个
 
-现有正则工具要么只在网页里（regex101），要么偏检索（ripgrep），要么沉默寡言（grep）。RegexMate 是一个诚实的小 CLI，把七个动词做好，并且原生说 JSON：
+RegexMate 提供确定性的正则校验、测试、解释与审查流程，并输出结构化 JSON：
 
 - **validate** —— 按 Racket `pregexp` 方言校验语法，报错保持单行
 - **match** —— 对文本或 stdin 执行匹配；终端里高亮，管道里结构化
@@ -110,7 +110,7 @@ Updated to v0.8.0. Run `regexmate --version` to confirm; restart the RegexMate a
 
 每个平台的发布包都带 `regexmate-gui`——原生应用（SwiftUI / WinUI 3 / GTK4），跑在同一套 Racket 核心上（经 [Rivet](https://github.com/turlamai/rivet) 嵌入，无 WebView、无 Electron）。pattern 常驻工具栏，边打边算：匹配直接高亮在样本文字里，匹配列表、人话解释、lint 发现与铁路图实时更新：
 
-![RegexMate 桌面 GUI（macOS）](docs/assets/gui-macos.png)
+**无需截图的验收方法：** 输入样本文字及能够匹配的正则表达式，匹配位置应高亮，匹配列表应随之更新。若无匹配结果，请检查正则语法及样本文字。
 
 ## Agent 工作流
 

@@ -15,7 +15,7 @@ Free developer and agent tool under the existing BUSL-1.1 terms, including the r
 
 ## Why
 
-Regex tooling today is either web-only (regex101), search-oriented (ripgrep) or silent (grep). RegexMate is a small, honest CLI that does seven verbs well and speaks JSON natively:
+RegexMate provides a deterministic command-line workflow for validating, testing, explaining, and reviewing regular expressions, with structured JSON output:
 
 - **validate** — check a pattern against the Racket `pregexp` flavor, single-line error messages
 - **match** — run a pattern against text or stdin; highlighted in a terminal, structured over a pipe
@@ -96,7 +96,7 @@ SVG saved to: diagram.svg
 
 Every release archive ships `regexmate-gui` — a native app (SwiftUI / WinUI 3 / GTK4) on the same Racket core, embedded via [Rivet](https://github.com/turlamai/rivet). No WebView, no Electron. The pattern lives in the toolbar and re-evaluates as you type: matches are highlighted inside your sample text, and the match list, explanation, lint findings and the railroad diagram update live:
 
-![RegexMate desktop GUI on macOS](docs/assets/gui-macos.png)
+**Verify the workflow without a screenshot:** enter a sample text and a matching pattern. Matching spans should be highlighted and the match list should update. If no match appears, check the pattern syntax and sample text.
 
 ## Self-update
 
