@@ -43,7 +43,9 @@ RegexMate 提供确定性的正则校验、测试、解释与审查流程，并�
 | Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-x86_64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
 | Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-arm64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
 
-每个发布都带逐文件 `.sha256` 校验和与 `SHA256SUMS` 清单。macOS 应用为 ad-hoc 签名——首次启动右键 → 打开。CLI 可原地自更新——见[自更新](#自更新)。
+每个发布都带逐文件 `.sha256` 校验和与 `SHA256SUMS` 清单。CLI 使用独立的 Ed25519 签名更新清单自更新——见[自更新](#自更新)。
+
+**发布可信度：** 当前 macOS 程序使用 **ad-hoc 签名**，不等同于 Apple Developer ID 签名或苹果公证；Windows MSI、便携 ZIP 和独立 EXE 默认**没有代码签名**，SmartScreen 可能提示发布者无法识别。发布 Windows 安装包不需要购买付费签名证书。请从官方 Releases 获取文件，并核对公布的 SHA-256 校验值；校验和只能验证文件完整性，不能证明发布者身份。未来接入 Apple Developer ID 公证或可选 Windows Authenticode 时，需要配置相应证书并通过真实发布验收；当前不声称已经完成。
 
 **Windows 单文件 exe**（仅 CLI，无 GUI）：从发布页取 `regexmate-<version>-windows-x86_64-standalone.exe`，下载即用。
 
