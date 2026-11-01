@@ -64,7 +64,7 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
                 <a href="#agents" data-i18n="nav.agents">智能体</a>
                 <a href="#install" data-i18n="nav.install">安装</a>
                 <a href="guide.html" data-i18n="nav.manual">手册</a>
-                <a href="https://github.com/turinglambdaai/regexmate" class="nav-github">GitHub</a>
+                <a href="https://github.com/turlamai/regexmate" class="nav-github">GitHub</a>
                 <div class="lang-dropdown-wrapper">
                     <button class="lang-btn" type="button" onclick="void 0" aria-label="Switch language">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -93,7 +93,7 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
                 一条安静的 CLI 包办所有正则工作——校验、匹配、解释、替换、绘图、测试、风险分析。对 agent 说 JSON，对你说人话，还会自己更新。
             </p>
             <div class="hero-cta reveal">
-                <a class="btn btn-primary" href="https://github.com/turinglambdaai/regexmate/releases" data-i18n="hero.download">下载</a>
+                <a class="btn btn-primary" href="https://github.com/turlamai/regexmate/releases" data-i18n="hero.download">下载</a>
                 <a class="btn btn-quiet" href="#agents" data-i18n="hero.agents">接入你的智能体 →</a>
             </div>
             <p class="hero-note reveal" data-i18n="hero.note.rewrite">
@@ -105,9 +105,10 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
         </div>
         <div class="hero-visual reveal">
             <div class="hero-glow" aria-hidden="true"></div>
-            <figure class="shot-frame">
-                <img src="assets/gui-macos.png" alt="The RegexMate desktop app on macOS: pattern bar in the toolbar, matches highlighted inside the sample text, match list with spans, explanation, lint findings and a railroad diagram" fetchpriority="high">
-            </figure>
+            <div class="shot-frame" style="padding:28px;">
+                <p class="reader-en" lang="en">Enter a regular expression and sample text. Matching spans and the match list update as you type; explanations and lint findings provide reviewable evidence. Verify production behavior in the destination regex engine.</p>
+                <p class="reader-zh" lang="zh">输入正则表达式及样本文字，匹配高亮和结果列表应随输入更新；解释与 lint 结果可供核查。投入生产前还应在最终正则引擎中复核。</p>
+            </div>
         </div>
     </header>
 
@@ -242,7 +243,7 @@ lib/</div>
             </div>
             <div class="agent-grid">
                 <div class="agent-col reveal">
-                    <h3>MCP server <span style="font-size:0.6em;color:var(--ink-3);font-weight:500">· also on <a href="https://github.com/turinglambdaai/regexmate/blob/main/docs/agents-guide.md" style="color:var(--accent)">agents-guide</a></span></h3>
+                    <h3>MCP server <span style="font-size:0.6em;color:var(--ink-3);font-weight:500">· also on <a href="https://github.com/turlamai/regexmate/blob/main/docs/agents-guide.md" style="color:var(--accent)">agents-guide</a></span></h3>
                     <p data-i18n="ag.mcp.body">
                         七个带输入 schema 的工具，走 stdio JSON-RPC。配置里加一段即可——零胶水代码。
                     </p>
@@ -294,12 +295,12 @@ regexmate schema</div>
                 <div class="install-col reveal">
                     <h3 data-i18n="in.binary.title">二进制</h3>
                     <p data-i18n="in.binary.body">Windows、Linux、macOS。解压即用——免运行时；macOS / Windows / Linux 还各有 dmg / msi / deb / rpm / AppImage 安装器，Windows 另有单文件 <code>regexmate-standalone-*.exe</code>。</p>
-                    <a class="btn btn-primary" href="https://github.com/turinglambdaai/regexmate/releases" data-i18n="in.binary.cta">下载</a>
+                    <a class="btn btn-primary" href="https://github.com/turlamai/regexmate/releases" data-i18n="in.binary.cta">下载</a>
                 </div>
                 <div class="install-col reveal">
                     <h3>Racket</h3>
                     <p data-i18n="in.racket.body">已在用 Racket？直接从仓库安装。</p>
-<code class="code-pill">raco pkg install https://github.com/turinglambdaai/regexmate.git</code>
+<code class="code-pill">raco pkg install https://github.com/turlamai/regexmate.git</code>
                 </div>
                 <div class="install-col reveal">
                     <h3 data-i18n="in.source.title">源码</h3>
@@ -329,7 +330,7 @@ raco exe -o regexmate main.rkt</code>
 
     <!-- Footer -->
     <section id="start-here" class="product-start" aria-label="Get started / 开始使用">
-<h2 class="reader-en " lang="en">Start with one useful session.</h2><h2 class="reader-zh " lang="zh">从一次有效使用开始。</h2><p class="reader-en start-status" lang="en">Free developer and agent tool under the existing BUSL-1.1 terms, including the repository’s allowed internal use. The licence is not MIT and is not changed by the free-product policy.</p><p class="reader-zh start-status" lang="zh">按现行 BUSL-1.1 条款提供的免费开发者与 agent 工具，包含仓库许可的内部使用。许可证不是 MIT，免费定位不改变许可条款。</p><p class="reader-en " lang="en">Desktop/CLI release assets for macOS, Windows and Linux. The engine uses Racket pregexp; it is not a proof of matching JavaScript, PCRE or another production engine.</p><p class="reader-zh " lang="zh">提供 macOS、Windows、Linux 桌面与 CLI 发布附件。引擎使用 Racket pregexp，不能据此认定 JavaScript、PCRE 或其他生产引擎语义相同。</p><div class="product-start-grid"><article><h3 class="reader-en " lang="en">01</h3><h3 class="reader-zh " lang="zh">01</h3><p class="reader-en " lang="en">Run regexmate validate on your pattern, then match a synthetic positive sample.</p><p class="reader-zh " lang="zh">先用 regexmate validate 验证模式，再匹配一条合成正例。</p></article><article><h3 class="reader-en " lang="en">02</h3><h3 class="reader-zh " lang="zh">02</h3><p class="reader-en " lang="en">Add negative and boundary cases with regexmate test; inspect lint findings before using the pattern on untrusted input.</p><p class="reader-zh " lang="zh">用 regexmate test 添加反例与边界样例；将模式用于不可信输入前检查 lint 结果。</p></article><article><h3 class="reader-en " lang="en">03</h3><h3 class="reader-zh " lang="zh">03</h3><p class="reader-en " lang="en">For agent use, connect regexmate mcp and allow only the tools needed. Recheck the pattern in the actual destination engine.</p><p class="reader-zh " lang="zh">供 agent 使用时连接 regexmate mcp，仅授予需要的工具权限，并在最终目标引擎复核模式。</p></article></div><p class="reader-en start-limits" lang="en">The GUI has a read-only update check; applying updates is the CLI’s job. Exit and restart the GUI after updating. Source/package installs use their own update path.</p><p class="reader-zh start-limits" lang="zh">GUI 只读检查更新，实际安装由 CLI 执行。更新后退出并重启 GUI；源码或包安装使用对应更新方式。</p><div class="start-links"><a class="reader-en" lang="en" href="https://github.com/turinglambdaai/regexmate/blob/main/docs/USER-GUIDE.md">Installation, privacy &amp; recovery</a><a class="reader-zh" lang="zh" href="https://github.com/turinglambdaai/regexmate/blob/main/docs/USER-GUIDE.zh-CN.md">安装、隐私与恢复</a><a href="https://github.com/turinglambdaai/regexmate/issues"><span class="reader-en " lang="en">Get help</span><span class="reader-zh " lang="zh">反馈与帮助</span></a></div>
+<h2 class="reader-en " lang="en">Start with one useful session.</h2><h2 class="reader-zh " lang="zh">从一次有效使用开始。</h2><p class="reader-en start-status" lang="en">Free developer and agent tool under the existing BUSL-1.1 terms, including the repository’s allowed internal use. The licence is not MIT and is not changed by the free-product policy.</p><p class="reader-zh start-status" lang="zh">按现行 BUSL-1.1 条款提供的免费开发者与 agent 工具，包含仓库许可的内部使用。许可证不是 MIT，免费定位不改变许可条款。</p><p class="reader-en " lang="en">Desktop/CLI release assets for macOS, Windows and Linux. The engine uses Racket pregexp; it is not a proof of matching JavaScript, PCRE or another production engine.</p><p class="reader-zh " lang="zh">提供 macOS、Windows、Linux 桌面与 CLI 发布附件。引擎使用 Racket pregexp，不能据此认定 JavaScript、PCRE 或其他生产引擎语义相同。</p><div class="product-start-grid"><article><h3 class="reader-en " lang="en">01</h3><h3 class="reader-zh " lang="zh">01</h3><p class="reader-en " lang="en">Run regexmate validate on your pattern, then match a synthetic positive sample.</p><p class="reader-zh " lang="zh">先用 regexmate validate 验证模式，再匹配一条合成正例。</p></article><article><h3 class="reader-en " lang="en">02</h3><h3 class="reader-zh " lang="zh">02</h3><p class="reader-en " lang="en">Add negative and boundary cases with regexmate test; inspect lint findings before using the pattern on untrusted input.</p><p class="reader-zh " lang="zh">用 regexmate test 添加反例与边界样例；将模式用于不可信输入前检查 lint 结果。</p></article><article><h3 class="reader-en " lang="en">03</h3><h3 class="reader-zh " lang="zh">03</h3><p class="reader-en " lang="en">For agent use, connect regexmate mcp and allow only the tools needed. Recheck the pattern in the actual destination engine.</p><p class="reader-zh " lang="zh">供 agent 使用时连接 regexmate mcp，仅授予需要的工具权限，并在最终目标引擎复核模式。</p></article></div><p class="reader-en start-limits" lang="en">The GUI has a read-only update check; applying updates is the CLI’s job. Exit and restart the GUI after updating. Source/package installs use their own update path.</p><p class="reader-zh start-limits" lang="zh">GUI 只读检查更新，实际安装由 CLI 执行。更新后退出并重启 GUI；源码或包安装使用对应更新方式。</p><div class="start-links"><a class="reader-en" lang="en" href="https://github.com/turlamai/regexmate/blob/main/docs/USER-GUIDE.md">Installation, privacy &amp; recovery</a><a class="reader-zh" lang="zh" href="https://github.com/turlamai/regexmate/blob/main/docs/USER-GUIDE.zh-CN.md">安装、隐私与恢复</a><a href="https://github.com/turlamai/regexmate/issues"><span class="reader-en " lang="en">Get help</span><span class="reader-zh " lang="zh">反馈与帮助</span></a></div>
 </section>
 <footer class="footer">
         <div class="container footer-inner">
@@ -348,15 +349,15 @@ raco exe -o regexmate main.rkt</code>
             </div>
             <div class="footer-links">
                 <a href="guide.html" data-i18n="ft.manual">手册</a>
-                <a href="https://github.com/turinglambdaai/regexmate">GitHub</a>
-                <a href="https://github.com/turinglambdaai/regexmate/releases" data-i18n="ft.releases">发布</a>
-                <a href="https://github.com/turinglambdaai/regexmate/blob/main/README.zh-CN.md">中文文档</a>
+                <a href="https://github.com/turlamai/regexmate">GitHub</a>
+                <a href="https://github.com/turlamai/regexmate/releases" data-i18n="ft.releases">发布</a>
+                <a href="https://github.com/turlamai/regexmate/blob/main/README.zh-CN.md">中文文档</a>
                 <a href="https://jrtx.site">TuringLambdaAI</a>
             </div>
             <p class="footer-copy">MIT · © 2026 TuringLambdaAI</p>
         </div>
     </footer>
-<nav id="product-support" aria-label="Support / 支持"><a href="https://github.com/turinglambdaai/regexmate/issues"><span class="support-zh">反馈</span><span class="support-en" lang="en">Feedback</span></a> <a href="https://github.com/turinglambdaai/regexmate/releases"><span class="support-zh">发布与更新</span><span class="support-en" lang="en">Releases</span></a> <a href="https://github.com/turinglambdaai/regexmate/blob/main/LICENSE"><span class="support-zh">源码许可</span><span class="support-en" lang="en">Source license</span></a> <a class="support-zh" href="https://github.com/turinglambdaai/regexmate/blob/main/docs/USER-GUIDE.zh-CN.md">使用与帮助</a> <a class="support-en" lang="en" href="https://github.com/turinglambdaai/regexmate/blob/main/docs/USER-GUIDE.md">Usage & help</a></nav>
+<nav id="product-support" aria-label="Support / 支持"><a href="https://github.com/turlamai/regexmate/issues"><span class="support-zh">反馈</span><span class="support-en" lang="en">Feedback</span></a> <a href="https://github.com/turlamai/regexmate/releases"><span class="support-zh">发布与更新</span><span class="support-en" lang="en">Releases</span></a> <a href="https://github.com/turlamai/regexmate/blob/main/LICENSE"><span class="support-zh">源码许可</span><span class="support-en" lang="en">Source license</span></a> <a class="support-zh" href="https://github.com/turlamai/regexmate/blob/main/docs/USER-GUIDE.zh-CN.md">使用与帮助</a> <a class="support-en" lang="en" href="https://github.com/turlamai/regexmate/blob/main/docs/USER-GUIDE.md">Usage & help</a></nav>
 
     <script>
     (function () {
