@@ -17,6 +17,14 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  release-update-trust:
+    name: Offline Ed25519 updater signer trust contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Positive, wrong-key and malformed-DER tests
+        run: python3 scripts/check-release-update-key.py --self-test
+
   test:
     name: test (${{ matrix.os }}, racket ${{ matrix.racket }})
     runs-on: ${{ matrix.os }}

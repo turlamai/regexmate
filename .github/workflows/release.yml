@@ -22,6 +22,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Require release signer to match the installed client trust root
+        env:
+          UPDATE_ED25519_PRIVATE_KEY_B64: ${{ secrets.UPDATE_ED25519_PRIVATE_KEY_B64 }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${UPDATE_ED25519_PRIVATE_KEY_B64:-}" ]]; then
+            echo "::error::Missing UPDATE_ED25519_PRIVATE_KEY_B64; refusing an unsigned update feed"
+            exit 1
+          fi
+          umask 077
+          key_dir="$(mktemp -d)"
+          trap 'rm -rf "$key_dir"' EXIT
+          printf '%s' "$UPDATE_ED25519_PRIVATE_KEY_B64" | base64 -d > "$key_dir/private.der"
+          python3 scripts/check-release-update-key.py "$key_dir/private.der"
+
       - name: Install Racket
         uses: Bogdanp/setup-racket@v1.15
         with:
@@ -398,11 +413,14 @@ jobs:
           RIVET_UPDATE_KEY_ID: regexmate-2026-10
           UPDATE_ED25519_PRIVATE_KEY_B64: ${{ secrets.UPDATE_ED25519_PRIVATE_KEY_B64 }}
         run: |
-          KEY_DER="$(mktemp -d)/update-ed25519-private.der"
-          printf '%s' "$UPDATE_ED25519_PRIVATE_KEY_B64" | base64 -d > "$KEY_DER"
+          set -euo pipefail
+          umask 077
+          key_dir="$(mktemp -d)"
+          trap 'rm -rf "$key_dir"' EXIT
+          printf '%s' "$UPDATE_ED25519_PRIVATE_KEY_B64" | base64 -d > "$key_dir/private.der"
+          python3 scripts/check-release-update-key.py "$key_dir/private.der"
           RELEASE_ASSET_BASE_URL="https://github.com/turlamai/regexmate/releases/download/${{ github.ref_name }}" \
-            bash scripts/make-update-manifest.sh "${{ github.ref_name }}" artifacts "$KEY_DER"
-          rm -f "$KEY_DER"
+            bash scripts/make-update-manifest.sh "${{ github.ref_name }}" artifacts "$key_dir/private.der"
 
       - name: Verify SHA256SUMS
         run: |
