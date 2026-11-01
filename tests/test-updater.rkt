@@ -37,6 +37,10 @@
                                  "MCowBQYDK2VwAyEA")))
 
    (test-case "manifest url: default and env override"
+     ;; The updater and newly signed release feeds must use the canonical
+     ;; repository identity. Old owner redirects are not a trust contract.
+     (check-equal? regexmate-default-update-base-url
+                   "https://github.com/turlamai/regexmate/releases/latest/download")
      (check-equal? (manifest-url)
                    (string-append regexmate-default-update-base-url
                                   "/update-manifest.json"))

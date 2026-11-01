@@ -26,7 +26,7 @@
 ;; Signed channel manifest (update-manifest.json) location: the latest
 ;; release of this repository on GitHub Releases.
 (define regexmate-default-update-base-url
-  "https://github.com/turinglambdaai/regexmate/releases/latest/download")
+  "https://github.com/turlamai/regexmate/releases/latest/download")
 
 (provide regexmate-version
          regexmate-identifier
