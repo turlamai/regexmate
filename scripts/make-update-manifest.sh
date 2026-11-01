@@ -27,7 +27,7 @@ DIST="${2:?usage: make-update-manifest.sh <tag> <dist-dir> <key-der-path>}"
 KEY_PATH="${3:?usage: make-update-manifest.sh <tag> <dist-dir> <key-der-path>}"
 VERSION="${TAG#v}"
 KEY_ID="${RIVET_UPDATE_KEY_ID:-regexmate-2026-10}"
-BASE_URL="${RELEASE_ASSET_BASE_URL:-https://github.com/turinglambdaai/regexmate/releases/download/$TAG}"
+BASE_URL="${RELEASE_ASSET_BASE_URL:-https://github.com/turlamai/regexmate/releases/download/$TAG}"
 
 # ---- verify tag/version alignment -------------------------------------------
 RKTD_VERSION="$(racket -e '(require racket/file) (displayln (hash-ref (file->value "rivet.rktd") (quote version)))' | tr -d '"')"
