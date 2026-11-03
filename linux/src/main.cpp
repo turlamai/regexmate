@@ -620,7 +620,7 @@ void show_about_dialog() {
                                     GTK_LICENSE_MIT_X11);
   gtk_about_dialog_set_website(
       GTK_ABOUT_DIALOG(dialog),
-      "https://github.com/turinglambdaai/regexmate");
+      "https://github.com/turlamai/regexmate");
   gtk_window_set_transient_for(GTK_WINDOW(dialog), g_state.window);
   gtk_window_present(GTK_WINDOW(dialog));
 }

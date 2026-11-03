@@ -32,6 +32,6 @@
 
 先完成本仓 #4 的交付/维护门禁；免费并不降低签名更新、数据恢复或隐私要求。
 
-执行入口：[本仓 #4](https://github.com/turinglambdaai/regexmate/issues/4)。先交付这个切片，再扩展商业功能。
+执行入口：[本仓 #4](https://github.com/turlamai/regexmate/issues/4)。先交付这个切片，再扩展商业功能。
 
-组合定位及通用边界：[PORTFOLIO 中文版](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/PORTFOLIO.zh-CN.md)。
+组合定位及通用边界：[PORTFOLIO 中文版](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.zh-CN.md)。

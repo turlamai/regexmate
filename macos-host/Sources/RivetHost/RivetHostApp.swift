@@ -205,7 +205,7 @@ final class AppModel: ObservableObject {
             alert.addButton(withTitle: "Open Releases")
             alert.addButton(withTitle: "OK")
             if alert.runModal() == .alertFirstButtonReturn,
-               let url = URL(string: "https://github.com/turinglambdaai/regexmate/releases/latest") {
+               let url = URL(string: "https://github.com/turlamai/regexmate/releases/latest") {
                 NSWorkspace.shared.open(url)
             }
         case "offline":

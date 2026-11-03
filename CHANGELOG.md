@@ -358,7 +358,7 @@ native desktop app on Windows.
 
 ### Desktop GUI (Windows)
 
-- Native WinUI 3 application built with [Rivet](https://github.com/turinglambdaai/rivet):
+- Native WinUI 3 application built with [Rivet](https://github.com/turlamai/rivet):
   pattern field, test text, match table with absolute spans, plain-language
   explanation and a live railroad diagram — the same Racket core as the CLI,
   embedded in the app process. No WebView, no Electron.
