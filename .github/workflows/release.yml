@@ -422,10 +422,36 @@ jobs:
           RELEASE_ASSET_BASE_URL="https://github.com/turlamai/regexmate/releases/download/${{ github.ref_name }}" \
             bash scripts/make-update-manifest.sh "${{ github.ref_name }}" artifacts "$key_dir/private.der"
 
-      - name: Verify SHA256SUMS
+      - name: Verify and curate public release assets
         run: |
-          cd artifacts
-          shasum -a 256 --check SHA256SUMS
+          set -euo pipefail
+          VERSION="$(printf '%s' "$GITHUB_REF_NAME" | cut -c2-)"
+          # The updater signer may write a checksum list covering every
+          # intermediate; public checksums cover exactly published files.
+          test -s artifacts/update-manifest.json
+          mkdir -p public
+          for suffix in \
+            macos-arm64.dmg macos-arm64.tar.gz \
+            macos-x64.dmg macos-x64.tar.gz \
+            linux-amd64.deb linux-arm64.deb \
+            linux-x86_64.rpm linux-aarch64.rpm \
+            linux-x86_64.AppImage linux-aarch64.AppImage \
+            linux-x86_64.tar.gz linux-arm64.tar.gz \
+            windows-x64.msi windows-x86_64.zip \
+            windows-x86_64-standalone.exe \
+            macos-arm64.sbom.cdx.json macos-x64.sbom.cdx.json \
+            linux-arm64.sbom.cdx.json linux-x86_64.sbom.cdx.json \
+            windows-x86_64.sbom.cdx.json \
+            macos-arm64-THIRD_PARTY_NOTICES.txt macos-x64-THIRD_PARTY_NOTICES.txt \
+            linux-arm64-THIRD_PARTY_NOTICES.txt linux-x86_64-THIRD_PARTY_NOTICES.txt \
+            windows-x86_64-THIRD_PARTY_NOTICES.txt; do
+            name="regexmate-$VERSION-$suffix"
+            test -s "artifacts/$name" || { echo "::error::Missing or empty $name"; exit 1; }
+            cp "artifacts/$name" public/
+          done
+          cp artifacts/update-manifest.json public/
+          (cd public && sha256sum regexmate-* | LC_ALL=C sort -k2 > SHA256SUMS && sha256sum --check SHA256SUMS)
+          test "$(grep -c '^' public/SHA256SUMS)" -eq 25
 
       - name: Build release body (changelog section + checksums)
         run: |
@@ -447,50 +473,27 @@ jobs:
             echo ""
             echo "### Checksums (SHA-256)"
             echo '```'
-            cat artifacts/SHA256SUMS
+            cat public/SHA256SUMS
             echo '```'
           } >> release-body.md
 
-      - name: Create stable download aliases
-        run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          cd artifacts
-          # Stable, version-free names so releases/latest/download links
-          # survive the next tag. Byte-identical copies of the tagged
-          # assets, created after SHA256SUMS so it stays versioned-only;
-          # the publish globs below pick the aliases up unchanged.
-          cp "regexmate-${VERSION}-macos-arm64.tar.gz" "regexmate-macos-arm64.tar.gz"
-          cp "regexmate-${VERSION}-macos-x64.tar.gz" "regexmate-macos-x64.tar.gz"
-          cp "regexmate-${VERSION}-linux-x86_64.tar.gz" "regexmate-linux-x86_64.tar.gz"
-          cp "regexmate-${VERSION}-linux-arm64.tar.gz" "regexmate-linux-arm64.tar.gz"
-          cp "regexmate-${VERSION}-windows-x86_64.zip" "regexmate-windows-x86_64.zip"
-          cp "regexmate-${VERSION}-windows-x86_64-standalone.exe" \
-             "regexmate-windows-x86_64-standalone.exe"
-          cp "regexmate-${VERSION}-macos-arm64.dmg" "regexmate-macos-arm64.dmg"
-          cp "regexmate-${VERSION}-macos-x64.dmg" "regexmate-macos-x64.dmg"
-          cp "regexmate-${VERSION}-windows-x64.msi" "regexmate-windows-x64.msi"
-          cp "regexmate-${VERSION}-linux-amd64.deb" "regexmate-linux-x64.deb"
-          cp "regexmate-${VERSION}-linux-arm64.deb" "regexmate-linux-arm64.deb"
-          cp "regexmate-${VERSION}-linux-x86_64.AppImage" "regexmate-linux-x64.AppImage"
-          cp "regexmate-${VERSION}-linux-aarch64.AppImage" "regexmate-linux-arm64.AppImage"
-          ls -la
-
-      - name: Publish release
+      - name: Publish the curated release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/regexmate-*.tar.gz
-            artifacts/regexmate-*.zip
-            artifacts/regexmate-*.dmg
-            artifacts/regexmate-*.msi
-            artifacts/regexmate-*.deb
-            artifacts/regexmate-*.rpm
-            artifacts/regexmate-*.AppImage
-            artifacts/regexmate-*.sha256
-            artifacts/regexmate-*-standalone.exe
-            artifacts/*.sbom.cdx.json
-            artifacts/*THIRD_PARTY_NOTICES.txt
-            artifacts/update-manifest.json
-            artifacts/SHA256SUMS
+            public/regexmate-*
+            public/update-manifest.json
+            public/SHA256SUMS
           body_path: release-body.md
           generate_release_notes: true
+      - name: Reject stale release aliases on retry
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name' |
+            while IFS= read -r name; do
+              if [ ! -f "public/$name" ]; then
+                gh release delete-asset "$GITHUB_REF_NAME" "$name" --yes
+              fi
+            done
