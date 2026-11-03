@@ -43,7 +43,7 @@ Download from [Releases](https://github.com/turlamai/regexmate/releases/latest) 
 | Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-x86_64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
 | Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-arm64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
 
-Every release carries per-file `.sha256` checksums and a `SHA256SUMS` manifest. The CLI updates itself in place using an independently Ed25519-signed feed — see [Self-update](#self-update).
+Every release publishes one verified `SHA256SUMS` covering versioned binaries and public SBOM/notices; per-file `.sha256` sidecars remain CI artifacts instead of duplicate release downloads. The CLI updates itself in place using an independently Ed25519-signed feed — see [Self-update](#self-update).
 
 **Distribution trust:** macOS builds currently use an **ad-hoc signature**, not Apple Developer ID signing or notarization. Windows MSI, portable ZIP, and standalone EXE are **unsigned** by default; Windows SmartScreen may report an unrecognized publisher. No paid Windows signing certificate is required. Get packages from the official Releases page and verify the published SHA-256 checksums (integrity only, not authenticated publisher identity) before deciding whether to install. Future Apple Developer ID/notarization and optional Windows Authenticode signing require separate credentials and verified release jobs; neither is claimed for current artifacts.
 
