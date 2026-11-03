@@ -37,6 +37,16 @@ jobs:
         run: raco pkg install --auto --no-docs "https://github.com/turlamai/rivet.git#9d766b4acab672844093204cb4845ef4ef933d2c" crypto
       - name: Run executable product acceptance
         run: raco rivet acceptance --json > acceptance-report.json
+      - name: Print failed Windows acceptance diagnostics
+        if: failure()
+        shell: pwsh
+        run: |
+          if (Test-Path acceptance-report.json) {
+            $report = Get-Content acceptance-report.json -Raw
+            Write-Host $report.Substring(0, [Math]::Min($report.Length, 12000))
+          } else {
+            Write-Host "::error::Acceptance report was not produced"
+          }
       - uses: actions/upload-artifact@v4
         if: always()
         with:
