@@ -252,7 +252,7 @@ void MainWindow::PresentUpdateReport(std::vector<std::string> const& report,
     try {
       winrt::Windows::System::Launcher::LaunchUriAsync(
           winrt::Windows::Foundation::Uri{
-              L"https://github.com/turinglambdaai/regexmate/releases/latest"});
+              L"https://github.com/turlamai/regexmate/releases/latest"});
     } catch (...) {
       // Launcher can be unavailable on stripped-down systems; the URL is
       // also in the README.
