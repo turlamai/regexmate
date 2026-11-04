@@ -69,8 +69,17 @@ def main():
     listbox = wait_for("match list", lambda: next((n for n in walk(window) if role(n) == "list" and any(role(c) == "list item" for c in children(n))), None))
     # Row nodes can appear before their accessible names are populated; wait
     # for the name, not just the count.
-    items = wait_for("five named match rows", lambda: (lambda found: found if len(found) >= 5 and "Match 2 of 5" in (found[1].name or "") and "2026" in (found[1].name or "") else None)([n for n in children(listbox) if role(n) == "list item"]))
-    row2_name = items[1].name or ""
+    # AT-SPI objects can be recycled while the main loop updates the list.
+    # Capture both the row references and validated name in one poll, rather
+    # than dereferencing a possibly stale reference after wait_for returns.
+    def named_rows():
+        found = [n for n in children(listbox) if role(n) == "list item"]
+        if len(found) < 5: return None
+        name = found[1].name or ""
+        if "Match 2 of 5" not in name or "2026" not in name: return None
+        return (found, name)
+
+    items, row2_name = wait_for("five named match rows", named_rows)
     if "Match 2 of 5" not in row2_name or "2026" not in row2_name:
         raise AssertionError(f"match row 2 does not expose index/text/span to AT-SPI: {row2_name}")
     editor = wait_for("sample editor", lambda: next((n for n in walk(window) if role(n) == "text" and "Order 12345" in text(n)), None))
