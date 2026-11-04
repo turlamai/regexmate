@@ -176,7 +176,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
     position: relative; max-width: 960px; margin: 64px auto 0; padding: 0 28px;
 }
 .hero-glow {
-    position: absolute; inset: -8% -10% auto; height: 70%;
+    position: absolute; inset: -8% 0 auto; height: 70%;
     background:
         radial-gradient(50% 60% at 30% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
         radial-gradient(45% 55% at 75% 25%, rgba(59, 130, 246, 0.10), transparent 70%);
@@ -290,7 +290,11 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
     padding: 2px 10px; border-radius: 7px;
 }
 .agent-note { color: var(--ink-3); font-size: 0.84em; margin-top: 14px; }
-@media (max-width: 860px) { .agent-grid { grid-template-columns: 1fr; gap: 44px; } }
+@media (max-width: 860px) {
+    .agent-grid { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+    .agent-col { min-width: 0; }
+    .agent-col .snippet, .agent-col .out { max-width: 100%; }
+}
 
 /* ---------- install ---------- */
 .install-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
