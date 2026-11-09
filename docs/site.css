@@ -1,0 +1,130 @@
+/* ============================================================
+   RegexMate site.css — per-site sections only.
+   Shared frame lives in family.css (site-kit); do not duplicate.
+   ============================================================ */
+
+/* Hero pills (platform + licence) side by side. */
+.rx-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+.rx-pills .kit-eyebrow { margin-bottom: 0; }
+
+/* Availability line under the headline. */
+.rx-availability {
+    max-width: 64ch;
+    margin: 22px auto 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+}
+
+/* Framed workbench caption under the hero. */
+.rx-shot-frame {
+    max-width: 720px;
+    margin: 40px auto 0;
+    padding: 22px 28px;
+    background: var(--kit-surface);
+    border: 1px solid var(--kit-border);
+    border-radius: var(--kit-radius-l);
+    font-size: 14px;
+    color: var(--kit-text-2);
+    line-height: 1.7;
+}
+
+/* Bento wide cells span two columns of the 3-col grid. */
+.rx-wide { grid-column: span 2; }
+@media (max-width: 640px) { .rx-wide { grid-column: auto; } }
+
+/* Cell tag chip sits above the title. */
+.kit-card .kit-chip { margin-bottom: 12px; }
+.kit-card .rx-visual { margin-top: 16px; }
+
+/* Code / terminal showpieces (static content, not translated). */
+.rx-snippet,
+.rx-out {
+    font-family: var(--kit-font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    background: var(--kit-surface);
+    border: 1px solid var(--kit-border);
+    border-radius: var(--kit-radius-m);
+    padding: 14px 16px;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--kit-text);
+}
+.rx-snippet code,
+.rx-out code { background: none; padding: 0; font-size: 1em; }
+.rx-snippet .k { color: var(--kit-accent-strong); }
+html[data-theme="dark"] .rx-snippet .k { color: var(--kit-accent); }
+.rx-snippet .v { color: var(--kit-text-2); }
+.rx-out .dim { color: var(--kit-text-3); }
+.rx-out .ok { color: #2E8B57; }
+.rx-out .bad { color: #C0392B; }
+html[data-theme="dark"] .rx-out .ok { color: #6CC99B; }
+html[data-theme="dark"] .rx-out .bad { color: #E07B6B; }
+
+/* Install code blocks. */
+.rx-code { margin-top: 16px; }
+
+/* Railroad diagram figure. */
+.rx-figure { margin: 44px 0 0; }
+.rx-figure img {
+    background: var(--kit-bg-elevated);
+    border: 1px solid var(--kit-border);
+    border-radius: var(--kit-radius-l);
+    padding: 24px;
+}
+.rx-figure figcaption {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--kit-text-3);
+}
+
+/* Agents card details. */
+.rx-h3-note { font-size: 0.6em; color: var(--kit-text-3); font-weight: 500; }
+.rx-h3-note a { color: var(--kit-accent-strong); }
+html[data-theme="dark"] .rx-h3-note a { color: var(--kit-accent); }
+.rx-mt { margin-top: 22px; }
+
+/* Exit-code table. */
+.rx-exit-table {
+    margin-top: 14px;
+    width: 100%;
+    border-collapse: collapse;
+}
+.rx-exit-table td {
+    padding: 9px 0;
+    border-top: 1px solid var(--kit-border);
+    font-size: 14px;
+    color: var(--kit-text-2);
+    vertical-align: top;
+}
+.rx-exit-table tr:first-child td { border-top: 0; }
+.rx-exit-table td:first-child { width: 3.2em; color: var(--kit-text); }
+
+/* What's-next row. */
+.rx-next-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--kit-text-2);
+}
+
+/* Start-section inline link row. */
+.rx-start-links {
+    display: flex;
+    gap: 16px 24px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+/* ---------- Icon visibility per theme ---------- */
+html[data-theme="light"] .kit-icon-moon { display: none; }
+html[data-theme="dark"] .kit-icon-sun { display: none; }
