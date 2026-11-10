@@ -33,6 +33,7 @@
          platform-symbol architecture-symbol archive-installer-kind
          exe-path install-dir install-root exe-name
          installed-mode? standalone-install?
+         make-config
          embedded-public-key manifest-url
          parse-version version<? check-for-update pick-artifact
          download-candidate! verify-downloaded!
@@ -258,7 +259,11 @@
                   (embedded-public-key)
                   regexmate-update-key-id
                   update-rollout-bucket
-                  maximum-download-bytes))
+                  maximum-download-bytes
+                  ;; rivet #271: the feed's artifacts carry no component
+                  ;; (#f = the plain whole-app artifact) and selection
+                  ;; matches config component against artifact component
+                  #f))
 
 ;; an actionable update: the verified manifest it came from and the chosen
 ;; artifact

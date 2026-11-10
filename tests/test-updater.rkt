@@ -127,6 +127,35 @@
    ;; pick-artifact must disambiguate windows archives from the standalone
    ;; exe and always honor platform + architecture. Both installer kinds are
    ;; listed for the running platform so the test is host-independent.
+   (test-case "make-config selects the feed's component-less artifacts"
+     ;; Regression: rivet #271 grew updater-config a required component
+     ;; field while the feed's artifacts stay component-less (#f = the
+     ;; plain whole-app artifact); the shipped make-config kept the old
+     ;; nine-argument shape, so every real `regexmate update` / `--check`
+     ;; died with an arity error that the report path masked as a generic
+     ;; "offline" state. Build the config exactly the way the live check
+     ;; builds it and select against a manifest shaped like the published
+     ;; feed: the plain artifact must match, an 'app artifact must not, so
+     ;; neither a regression to the old arity nor a component-'app
+     ;; shortcut can pass.
+     (define host-platform (platform-symbol))
+     (define host-arch (architecture-symbol))
+     (define (feed-manifest component)
+       (update-manifest regexmate-identifier "9.9.8" 42 'stable
+                        "2026-10-09T00:00:00Z" "0.0.0" #f #t 100
+                        (list (update-artifact host-platform host-arch
+                                               "https://example.com/mine.tar.gz"
+                                               (make-string 64 #\a) 1
+                                               (archive-installer-kind) '()
+                                               component))))
+     (define tmp (make-temporary-file "rmconfig~a" 'directory))
+     (make-directory* (build-path tmp "lib"))    ; distributed layout marker
+     (parameterize ([current-exe-path (build-path tmp "regexmate.exe")])
+       (check-true (update-candidate? (select-update (make-config)
+                                                     (feed-manifest #f)))
+                   "the shipped config must select component-less feed artifacts")
+       (check-false (select-update (make-config) (feed-manifest 'app))
+                    "'app artifacts must not match the component-less config")))
    (test-case "pick-artifact: distributed installs take the archive"
      (define host-platform (platform-symbol))
      (define host-arch (architecture-symbol))
