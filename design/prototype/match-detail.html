@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexMate — Match Detail 原型（捕获组分解）</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ==== match-detail 屏专属：检查态的样文 pill 由全局 mark.m.sel 表达 ==== */
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Pattern — the i chip is active, so the pattern text carries (?i:…)">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="(?i:(\w+)@(\w+)\.com)" spellcheck="false" aria-label="Pattern">
+        <div class="flags" title="Flags are written into the pattern as flag groups, e.g. (?i:…)">
+          <span class="flag on" title="ignore case — active, see (?i:… in the pattern">i</span>
+          <span class="flag" title="multiline — wraps the pattern in (?m:…)">m</span>
+          <span class="flag" title="dot matches newline — wraps the pattern in (?s:…)">s</span>
+        </div>
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">≡</span>TEST TEXT</div>
+        <div class="card">
+          <div class="sample">Ship report to <mark class="m">ada@example.com</mark> and <mark class="m sel">turing@enigma.com</mark>; cc ops@core.team.</div>
+        </div>
+        <div class="sect"><span class="gi">⌕</span>MATCHES<span class="cnt">2</span></div>
+        <div class="card grow">
+          <div class="mlist">
+            <div class="mrow"><span class="ord">1</span><span class="mval">ada@example.com</span><span class="mspan">[15, 30)</span><span class="gbadge">2 groups</span></div>
+            <div class="mrow sel"><span class="ord">2</span><span class="mval">turing@enigma.com</span><span class="mspan">[35, 52)</span><span class="gbadge">2 groups</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">⌗</span>CAPTURES — MATCH 2 OF 2</div>
+        <div class="card">
+          <div class="caphead"><span class="cv">turing@enigma.com</span><span class="cs">[35, 52)</span></div>
+          <div class="caprow"><span class="capid">$1</span><span class="cv">turing</span><span class="cs">[35, 41)</span></div>
+          <div class="caprow"><span class="capid">$2</span><span class="cv">enigma</span><span class="cs">[42, 48)</span></div>
+        </div>
+        <div class="sect"><span class="gi">◫</span>EXPLANATION</div>
+        <div class="card">
+          <div class="explain">1. [flag-group] (?i:…)
+<span class="arr">     ← Case-insensitive inside this group</span>
+2. [group] (\w+) × 2
+<span class="arr">     ← Capturing groups: Word (\w) × +</span>
+3. [literal] @  \.com
+<span class="arr">     ← Literal @, then a dot and "com"</span></div>
+        </div>
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS</div>
+        <div class="card">
+          <div class="lint"><div class="lok"><span class="ok">✓</span>No lint findings</div></div>
+        </div>
+        <div class="sect"><span class="gi">⌗</span>RAILROAD DIAGRAM</div>
+        <div class="card rail" style="height:150px">
+          <svg width="420" height="92" viewBox="0 0 420 92" fill="none" role="img" aria-label="Railroad diagram: flag group with two capture groups">
+            <path d="M12 50 H46" stroke="#A1A1A6" stroke-width="1.5"/>
+            <rect x="46" y="14" width="52" height="26" rx="6" stroke="#037A55" fill="#FFFFFF"/>
+            <text x="72" y="31" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#037A55">(?i:</text>
+            <rect x="112" y="37" width="66" height="26" rx="6" stroke="#86868B" fill="#FFFFFF"/>
+            <text x="145" y="54" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#1D1D1F">\w+</text>
+            <rect x="192" y="37" width="18" height="26" rx="6" stroke="#86868B" fill="#FFFFFF"/>
+            <text x="201" y="54" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#1D1D1F">@</text>
+            <rect x="224" y="37" width="66" height="26" rx="6" stroke="#86868B" fill="#FFFFFF"/>
+            <text x="257" y="54" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#1D1D1F">\w+</text>
+            <rect x="304" y="37" width="58" height="26" rx="6" stroke="#86868B" fill="#FFFFFF"/>
+            <text x="333" y="54" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#1D1D1F">\.com</text>
+            <rect x="376" y="14" width="24" height="26" rx="6" stroke="#037A55" fill="#FFFFFF"/>
+            <text x="388" y="31" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#037A55">)</text>
+            <path d="M46 50 H112 M178 50 H192 M210 50 H224 M290 50 H304 M362 50 H376" stroke="#A1A1A6" stroke-width="1.5"/>
+            <path d="M72 40 V50 M388 40 V50" stroke="#A1A1A6" stroke-width="1.5"/>
+            <path d="M400 50 H414" stroke="#A1A1A6" stroke-width="1.5"/>
+            <path d="M408 44 L414 50 L408 56" stroke="#A1A1A6" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">2 matches · 0 findings</span>
+      <div class="hints"><kbd>⌘G</kbd>Next<span><kbd>⇧⌘G</kbd>Prev</span><span><kbd>↑↓</kbd>Walk rows</span><span><kbd>Tab</kbd>Focus loop</span></div>
+    </div>
+  </div>
+  <div class="cap">原型 v0.1 · 按 ◐ 切换亮暗 · 状态：检查 match 2——行选中 ⇆ 样文强 pill 同一 span；Captures 面板需扩 match-rows RPC 返回 group 值（引擎数据已有，见 JSON 契约 matches[].groups）</div>
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

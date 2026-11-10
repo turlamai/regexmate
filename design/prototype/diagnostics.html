@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexMate — Diagnostics 原型（错误态全集）</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ==== diagnostics 屏专属：两个窗口并陈错误态与警告态 ==== */
+  .held { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-top: 1px solid var(--hairline); font-size: 11px; color: var(--ink-3); }
+  .rail.empty { color: var(--ink-3); font-size: 12px; background: var(--canvas); }
+</style>
+</head>
+<body>
+  <div class="window short">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield err" title="Invalid pattern — error icon carries the engine's single-line message">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="[a-" spellcheck="false" aria-label="Pattern">
+        <span class="perr" title="missing closing square bracket in pattern">⚠</span>
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">≡</span>TEST TEXT</div>
+        <div class="card">
+          <div class="sample" style="color:var(--ink-2)">Order 12345 shipped on 2026-09-28 to zip 10115.</div>
+        </div>
+        <div class="sect"><span class="gi">⌕</span>MATCHES</div>
+        <div class="card grow">
+          <div class="mempty"><span class="big">⌕</span><span>Fix the pattern to match</span><span style="font-size:11px">the invalid draft stays in the field for editing</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">◫</span>EXPLANATION</div>
+        <div class="card">
+          <div class="explain">1. [escape] \d
+<span class="arr">     ← Digit (\d)</span>
+2. [quantifier] +
+<span class="arr">     ← One or more of the previous</span></div>
+          <div class="held"><span>⏸</span>Held from the last valid pattern — returns when the pattern is fixed</div>
+        </div>
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS</div>
+        <div class="card">
+          <div class="lint"><div class="lok" style="color:var(--ink-3)"><span>—</span>Cleared while the pattern is invalid</div></div>
+        </div>
+        <div class="sect"><span class="gi">⌗</span>RAILROAD DIAGRAM</div>
+        <div class="card rail empty">No diagram</div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot bad"></span><span class="bad">missing closing square bracket in pattern</span>
+      <span class="sp"></span>
+      <span class="cnt">—</span>
+      <div class="hints"><kbd>⌘R</kbd>Run<span><kbd>Tab</kbd>Back to pattern</span></div>
+    </div>
+  </div>
+  <div class="cap">A · 非法模式 = 错误态：红点 + 状态栏内联引擎单行错误、计数让位为 —、列表「Fix the pattern to match」、explanation 保留上一模式（契约规则 4）</div>
+  <div class="window short">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Valid pattern — zero matches is an ordinary result, not an error">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="\d{8}" spellcheck="false" aria-label="Pattern">
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn3" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">≡</span>TEST TEXT</div>
+        <div class="card">
+          <div class="sample">Order 12345 shipped on 2026-09-28 to zip 10115.</div>
+        </div>
+        <div class="sect"><span class="gi">⌕</span>MATCHES<span class="cnt">0</span></div>
+        <div class="card grow">
+          <div class="mempty"><span class="big">⌕</span><span>No matches</span><span style="font-size:11px">the pattern is valid — zero matches is an ordinary result (CLI exit code 3)</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">◫</span>EXPLANATION</div>
+        <div class="card">
+          <div class="explain">1. [escape] \d
+<span class="arr">     ← Digit (\d)</span>
+2. [quantifier] {8}
+<span class="arr">     ← Exactly 8 of the previous</span></div>
+        </div>
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS</div>
+        <div class="card">
+          <div class="lint"><div class="lok"><span class="ok">✓</span>No lint findings</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">0 matches · 0 findings</span>
+      <div class="hints"><kbd>⌘R</kbd>Run<span><kbd>Tab</kbd>Focus loop</span></div>
+    </div>
+  </div>
+  <div class="cap">B · 合法零匹配 = 普通空态：「No matches」、绿点照常、计数 0 而非 ——— 与 A 的错误态形成契约规则 4 要求的成对对照</div>
+  <div class="window short">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Valid pattern — matching still runs, warnings never block it">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="(a+)+|a|" spellcheck="false" aria-label="Pattern">
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn2" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">≡</span>TEST TEXT</div>
+        <div class="card">
+          <div class="sample"><mark class="m">aaa</mark> b <mark class="m">a</mark></div>
+        </div>
+        <div class="sect"><span class="gi">⌕</span>MATCHES<span class="cnt">2</span></div>
+        <div class="card grow">
+          <div class="mlist">
+            <div class="mrow"><span class="ord">1</span><span class="mval">aaa</span><span class="mspan">[0, 3)</span></div>
+            <div class="mrow"><span class="ord">2</span><span class="mval">a</span><span class="mspan">[6, 7)</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS<span class="cnt">2</span></div>
+        <div class="card">
+          <div class="lint">
+            <div class="lintrow">
+              <span class="chip warning">WARNING</span>
+              <div><div class="head"><span class="rule">nested-quantifier</span><span class="pos">@0</span></div>
+              <div class="msg">nested quantifiers over a group can backtrack catastrophically on non-matching input</div></div>
+            </div>
+            <div class="lintrow">
+              <span class="chip warning">WARNING</span>
+              <div><div class="head"><span class="rule">empty-branch</span><span class="pos">@8</span></div>
+              <div class="msg">alternative 2 is empty — it matches the empty string, usually a bug</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="note">Warnings never block matching — the sample still highlights and the list still fills; they travel into CI via <span style="font-family:var(--mono)">lint --strict</span>.</div>
+        <div class="sect"><span class="gi">◫</span>EXPLANATION</div>
+        <div class="card">
+          <div class="explain">1. [quantifier] (a+)+
+<span class="arr">     ← One or more of: group (a × +) × +</span>
+2. [alternation] | a |
+<span class="arr">     ← Three branches; branch 2 is empty</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">2 matches · 2 findings</span>
+      <div class="hints"><kbd>⌘R</kbd>Run<span><kbd>⌘G</kbd>Next</span></div>
+    </div>
+  </div>
+  <div class="cap">C · 合法但有灾难性回溯风险：匹配照常运行（样文照常高亮），lint 警告即时呈现 rule @pos + message；警告不阻断、错误才阻断（不变式 2）</div>
+  <script>
+    for (const btn of document.querySelectorAll('[id^=themeBtn]')) {
+      btn.addEventListener('click', () => document.body.classList.toggle('dark'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexMate — Settings 原型（设置）</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ==== settings 屏专属 ==== */
+  .setscroll { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 6px; }
+  .readonly { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--ink-3); border: 1px solid var(--hairline); border-radius: 99px; padding: 2px 8px; }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Pattern — the command surface stays one keystroke away from settings">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="\d+" spellcheck="false" aria-label="Pattern">
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="content single">
+      <div class="col setscroll">
+        <div class="sect"><span class="gi">◐</span>APPEARANCE</div>
+        <div class="card">
+          <div class="setrow"><span class="lab">Theme</span>
+            <div class="seg"><span class="on">Follow system</span><span>Light</span><span>Dark</span></div>
+            <span style="flex:1"></span><span class="hint">each host follows the platform appearance</span></div>
+        </div>
+        <div class="sect"><span class="gi">🌐</span>LANGUAGE</div>
+        <div class="card">
+          <div class="setrow"><span class="lab">Interface &amp; explain</span>
+            <div class="seg"><span class="on">English</span><span>中文</span></div>
+            <span style="flex:1"></span><span class="hint">CLI equivalent: <span style="font-family:var(--mono)">--lang zh</span></span></div>
+        </div>
+        <div class="sect"><span class="gi">⌗</span>ENGINE FLAVOR<span class="cnt" style="margin-left:8px">READ-ONLY</span></div>
+        <div class="card">
+          <div class="setrow"><span class="lab">Dialect</span><span class="val">Racket pregexp</span>
+            <span style="flex:1"></span><span class="hint">the engine is fixed — RegexMate never pretends to be PCRE or JS</span></div>
+          <div class="setrow"><span class="lab">Supported</span><span class="mono-hint">. ^ $ * + ? {n,m} · ( ) (?: ) (?> ) · (?=) (?!) (?&lt;=) (?&lt;!) · flag groups (?i:…) (?is:…) (?-i:…) · classes [a-z] [^…] [:alpha:] · \d \w \s \b · \1–\9 · \p{…} \P{…}</span></div>
+          <div class="setrow"><span class="lab">Not supported</span><span class="mono-hint" style="color:var(--danger)">named groups (?&lt;name&gt;…) · \A \z anchors · \x41 hex escapes</span></div>
+        </div>
+        <div class="sect"><span class="gi">⟳</span>UPDATES</div>
+        <div class="card">
+          <div class="setrow"><span class="lab">Updates</span><button class="btn">Check for Updates…</button><kbd>⇧⌘U</kbd>
+            <span style="flex:1"></span><span class="hint">read-only — applying the update is the CLI's job</span></div>
+          <div class="setrow"><span class="lab">Model</span><span class="hint">nothing checks in the background — updates are user-initiated; the signed manifest is verified, then the CLI swaps the binary and the app restarts</span></div>
+        </div>
+        <div class="sect"><span class="gi">ⓘ</span>ABOUT</div>
+        <div class="card">
+          <div class="setrow"><span class="lab">Version</span><span class="val">0.8.0</span><span style="flex:1"></span><span class="hint">stable channel · <span style="font-family:var(--mono)">site.jrtx.regexmate</span></span></div>
+          <div class="setrow"><span class="lab">JSON contract</span><span class="val">regexmate/v1</span><span style="flex:1"></span><span class="hint">stable keys, <span style="font-family:var(--mono)">[start, end)</span> spans, single-line errors</span></div>
+          <div class="setrow"><span class="lab">MCP server</span><span class="val">7 tools over stdio</span><span style="flex:1"></span><span class="hint">validate · match · explain · replace · graph · test · lint</span></div>
+          <div class="setrow"><span class="lab">License</span><span class="val">BUSL-1.1</span><span style="flex:1"></span><span class="hint">free to use; converts to MIT per version after four years</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">v0.8.0 · stable</span>
+      <div class="hints"><kbd>⌘R</kbd>Run<span><kbd>Tab</kbd>Walk settings</span></div>
+    </div>
+  </div>
+  <div class="cap">原型 v0.1 · 按 ◐ 切换亮暗 · 状态：设置——方言诚实（Flavor 只读卡、不支持清单用 danger 色）、更新模型如实标注（GUI 只读检查，无后台探测）</div>
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

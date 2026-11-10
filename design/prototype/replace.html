@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexMate — Replace Preview 原型（diff 态）</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ==== replace 屏专属 ==== */
+  .preview-note { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--hairline); font-size: 11.5px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Find pattern — same command surface as the workbench">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="(\w+)@(\w+)" spellcheck="false" aria-label="Find pattern">
+      </div>
+      <button class="tbtn" title="Run (⌘R)">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="subbar">
+      <span class="lab">REPLACE WITH</span>
+      <div class="rfield"><span class="pchev">↳</span><input value="\1 AT \2" spellcheck="false" aria-label="Replacement template"></div>
+      <span class="hint" style="font-size:11.5px;color:var(--ink-3)"><kbd>\1</kbd>–<kbd>\9</kbd> backreferences</span>
+      <span style="flex:1"></span>
+      <button class="btn primary" title="Apply asks for confirmation before writing back">Apply…</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">≡</span>TEST TEXT</div>
+        <div class="card">
+          <div class="sample">mail <mark class="m">a@b</mark> first
+then <mark class="m">ops@ci</mark> later</div>
+        </div>
+        <div class="sect"><span class="gi">⌕</span>MATCHES<span class="cnt">2</span></div>
+        <div class="card grow">
+          <div class="mlist">
+            <div class="mrow sel"><span class="ord">1</span><span class="mval">a@b</span><span class="mspan">[5, 8)</span><span class="gbadge">2 groups</span></div>
+            <div class="mrow"><span class="ord">2</span><span class="mval">ops@ci</span><span class="mspan">[13, 19)</span><span class="gbadge">2 groups</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">↳</span>REPLACE PREVIEW<span class="cnt">2 replacements</span></div>
+        <div class="card grow">
+          <div class="diff">
+            <div class="dl rem"><span class="g">−</span><span>mail <mark>a@b</mark> first</span></div>
+            <div class="dl add"><span class="g">+</span><span>mail <mark>a AT b</mark> first</span></div>
+            <div class="dl rem"><span class="g">−</span><span>then <mark>ops@ci</mark> later</span></div>
+            <div class="dl add"><span class="g">+</span><span>then <mark>ops AT ci</mark> later</span></div>
+          </div>
+          <div class="preview-note"><span>ⓘ</span><span>Apply writes the previewed result back to Test text and asks for confirmation first — nothing is replaced silently.</span></div>
+        </div>
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS</div>
+        <div class="card">
+          <div class="lint"><div class="lok"><span class="ok">✓</span>No lint findings</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">2 matches · 2 replacements</span>
+      <div class="hints"><kbd>⌘R</kbd>Run<span><kbd>⏎</kbd>Preview</span><span><kbd>⌘⏎</kbd>Apply…</span></div>
+    </div>
+  </div>
+  <div class="cap">原型 v0.1 · 按 ◐ 切换亮暗 · 状态：替换预览 diff 态——左列只读地保留工作台上下文，右列预览 −/+ 逐行对照；Apply 需显式确认（不变式 4）· 需扩 replace-preview RPC</div>
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

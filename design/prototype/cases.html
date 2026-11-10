@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexMate — Test Cases 原型（用例管理）</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ==== cases 屏专属 ==== */
+  .total { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--hairline); font-size: 11.5px; color: var(--ink-2); }
+  .total b { font-weight: 700; }
+  .total .fail-c { color: var(--danger); font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="brand">RegexMate</div>
+      <div class="pfield" title="Pattern under test — cases run against it, evidence per case">
+        <span class="pchev">❯</span>
+        <input class="pinput" value="\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])" spellcheck="false" aria-label="Pattern">
+      </div>
+      <button class="tbtn" title="Run (⌘R) — runs all cases">⟳</button>
+      <button class="tbtn" title="Export HTML report">⤴</button>
+      <button class="tbtn" id="themeBtn" title="Toggle light/dark theme">◐</button>
+    </div>
+    <div class="subbar">
+      <span class="lab">TEST CASES</span>
+      <span class="chip error">1 FAILED</span>
+      <span class="hint" style="font-size:11.5px;color:var(--ink-3)">write → test → refine, same evidence as <span style="font-family:var(--mono)">regexmate test</span></span>
+      <span style="flex:1"></span>
+      <button class="btn">Edit as JSON</button>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="sect"><span class="gi">☑</span>CASES<span class="cnt">3</span></div>
+        <div class="card grow">
+          <div class="caserow"><span class="verdict pass">✓</span><span class="ctext">"2026-09-28"</span><span class="cexp">match</span><span class="cev">matched [0, 10)</span></div>
+          <div class="caserow"><span class="verdict pass">✓</span><span class="ctext">"2026-13-01"</span><span class="cexp">no-match</span><span class="cev">no match</span></div>
+          <div class="caserow sel" style="background:var(--accent-tint)"><span class="verdict fail">✗</span><span class="ctext">"2026-2-30"</span><span class="cexp">match</span><span class="cev bad">expected a match, got none</span></div>
+          <div class="addrow"><span>＋</span><input placeholder="paste case text, press Return to add" aria-label="New case text"><span class="cexp">match ▾</span></div>
+          <div class="total"><b>Passed 2 of 3 case(s)</b><span>·</span><span class="fail-c">1 failed</span><span style="flex:1"></span><span style="color:var(--ink-3)">cases run on every ⌘R</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sect"><span class="gi">⌗</span>CASE DETAIL — FAILING</div>
+        <div class="card">
+          <div class="kv"><span class="k">Text</span><span class="v">"2026-2-30"</span></div>
+          <div class="kv"><span class="k">Expect</span><span class="cexp">match</span></div>
+          <div class="kv"><span class="k">Actual</span><span class="chip error">NO MATCH</span></div>
+          <div class="kv"><span class="k">Evidence</span><span class="v" style="color:var(--ink-2)">no match at [0, 9) — the month branch needs 0[1-9] or 1[0-2]; "2" fails both</span></div>
+        </div>
+        <div class="note">The engine only knows the pattern, not calendar rules — a passing suite is per-case evidence, not a proof of semantics. Fix the pattern or the case, then re-run.</div>
+        <div class="sect"><span class="gi">◫</span>JSON CASE</div>
+        <div class="card">
+          <div class="explain">{"text":"2026-2-30","expect":"match"}</div>
+        </div>
+        <div class="sect"><span class="gi">⚑</span>LINT FINDINGS</div>
+        <div class="card">
+          <div class="lint"><div class="lok"><span class="ok">✓</span>No lint findings</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="dot"></span><span>Embedded Racket CS is ready</span>
+      <span class="sp"></span>
+      <span class="cnt">3 cases · 2 passed · 1 failed</span>
+      <div class="hints"><kbd>⌘R</kbd>Run all<span><kbd>↑↓</kbd>Walk cases</span></div>
+    </div>
+  </div>
+  <div class="cap">原型 v0.1 · 按 ◐ 切换亮暗 · 状态：用例管理——1 失败用例带逐例证据（expected vs actual）；新增用例行内即加 · 需扩 test-cases RPC（CLI test 已有 JSON 契约）</div>
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>
