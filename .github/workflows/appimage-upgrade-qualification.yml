@@ -81,6 +81,14 @@ jobs:
           set -euo pipefail
           spec="$(grep -ohE "https://[^']+rivet\.git#[^']+" .github/workflows/ci.yml | head -1)"
           test -n "$spec"
+          # the N workflows may pin through ${{ env.RIVET_PIN }} — resolve it
+          # from the env block they declare at the top
+          if echo "$spec" | grep -qF '${{'; then
+            pin="$(grep -m1 -E '^ *RIVET_PIN:' .github/workflows/ci.yml | sed -E 's/.*RIVET_PIN:[[:space:]]*//')"
+            test -n "$pin"
+            spec="$(echo "$spec" | sed -E "s/\\\$\{\{[[:space:]]*env\.RIVET_PIN[[:space:]]*\}\}/${pin}/")"
+          fi
+          case "$spec" in *'${{'*) echo "unresolved pin: $spec" >&2; exit 1;; esac
           echo "RIVET_SPEC=$spec" >> "$GITHUB_ENV"
 
       - name: Install headless GUI runtime + accessibility tools
