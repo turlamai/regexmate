@@ -108,6 +108,8 @@ Updated to v0.8.0. Run `regexmate --version` to confirm; restart the RegexMate a
 
 安装版可原地自更新：先用内嵌公钥验证 Ed25519 签名的更新清单（key id `regexmate-2026-10`），再把下载包的字节数与 SHA-256 对照该签名清单核对，最后运行中的二进制安全换装（改名移开、下次启动清理残留）。GUI 与 CLI 同包发布，随同更新——更新后请重启应用。GUI 里另有只读的**检查更新**入口（应用菜单，macOS 上 ⇧⌘U），查询的是同一份签名清单；应用更新仍由 CLI 完成。`--json` 输出标准信封供 agent 与脚本使用。源码与 `raco pkg` 安装会提示改用 `git pull` / `raco pkg update`。
 
+**更新模型——对家族基线的有意偏离。** 家族更新契约（`turlamai/taskly` 的 `shared/spec/UPDATE.md`）规定启动后静默检查一次、至多每 4 小时节流。RegexMate 有意偏离：它是 CLI 工具，采用完全用户发起的更新模型——`regexmate update`、`regexmate update --check` 与 GUI 的只读**检查更新**是仅有的触发点，后台不做任何检查（无守护进程、无启动期探测、无定时器）。家族契约的 4 小时静默节流条款对 RegexMate 豁免；其余条款——Ed25519 清单验证、按签名清单核对字节数与 SHA-256、二进制安全换装——原样继承。
+
 ## 桌面 GUI
 
 每个平台的发布包都带 `regexmate-gui`——原生应用（SwiftUI / WinUI 3 / GTK4），跑在同一套 Racket 核心上（经 [Rivet](https://github.com/turlamai/rivet) 嵌入，无 WebView、无 Electron）。pattern 常驻工具栏，边打边算：匹配直接高亮在样本文字里，匹配列表、人话解释、lint 发现与铁路图实时更新：

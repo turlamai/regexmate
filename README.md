@@ -114,6 +114,8 @@ Updated to v0.8.0. Run `regexmate --version` to confirm; restart the RegexMate a
 
 Installs update themselves in place from GitHub Releases: the Ed25519-signed channel manifest is verified against the public key embedded in the binary (key id `regexmate-2026-10`), the download's byte size and SHA-256 are checked against that signed manifest, and the running binary is swapped safely (renamed aside, cleaned up on next start). The GUI ships in the same archive and is refreshed by the same update — restart it afterwards. The GUI also has a read-only **Check for Updates** item (app menu, ⇧⌘U on macOS) that queries the same signed manifest; applying the update remains the CLI's job. `--json` emits the standard envelope for agents and scripts. Source and `raco pkg` installs are pointed at `git pull` / `raco pkg update` instead.
 
+**Update model — a deliberate deviation from the family baseline.** The family update contract (`turlamai/taskly`, `shared/spec/UPDATE.md`) prescribes one silent update check shortly after launch, throttled to at most once per 4 hours. RegexMate intentionally deviates: it is a CLI tool with a fully user-initiated update model — `regexmate update`, `regexmate update --check` and the GUI's read-only **Check for Updates** item are the only triggers, and nothing checks in the background (no daemon, no launch-time probe, no timer). The 4-hour silent-throttle clause of the family contract is therefore waived for RegexMate; every other clause — Ed25519 manifest verification, size and SHA-256 checks against the signed manifest, safe binary swap — is inherited unchanged.
+
 ## MCP server
 
 ```json
