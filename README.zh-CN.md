@@ -40,8 +40,8 @@ RegexMate 提供确定性的正则校验、测试、解释与审查流程，并�
 | macOS 14+（Apple Silicon） | `regexmate-<version>-macos-arm64.dmg` | `regexmate-<version>-macos-arm64.tar.gz`——CLI + `gui/regexmate-gui.app` |
 | macOS 14+（Intel） | `regexmate-<version>-macos-x64.dmg` | `regexmate-<version>-macos-x64.tar.gz`——CLI + `gui/regexmate-gui.app` |
 | Windows 10+ x64 | `regexmate-<version>-windows-x64.msi` | `regexmate-<version>-windows-x86_64.zip`——CLI + `gui\regexmate-gui.exe` |
-| Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-x86_64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
-| Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-arm64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
+| Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage`，或 `regexmate-<version>-linux-x86_64.flatpak`（仅 GUI 的 Flatpak 包，app id 为 `site.jrtx.regexmate`；用 `flatpak --user install` 安装） | `regexmate-<version>-linux-x86_64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
+| Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage`，或 `regexmate-<version>-linux-arm64.flatpak`（仅 GUI 的 Flatpak 包，app id 为 `site.jrtx.regexmate`；用 `flatpak --user install` 安装） | `regexmate-<version>-linux-arm64.tar.gz`——CLI + `gui/RivetHost`（GTK4） |
 
 每个发布都带逐文件 `.sha256` 校验和与 `SHA256SUMS` 清单。CLI 使用独立的 Ed25519 签名更新清单自更新——见[自更新](#自更新)。
 

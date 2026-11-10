@@ -1,0 +1,121 @@
+name: Flatpak smoke
+# Validation leg for the Flatpak bundle pipeline without a release: runs
+# the exact steps of release.yml's Flatpak stage against the latest
+# published release payload, on both architectures, and uploads the
+# bundle as an artifact. Dispatch manually after touching flatpak/ or
+# the release leg; it never publishes anything.
+#
+# Source of the GUI payload differs from the release leg only in staging:
+# the release re-tars the dist/regexmate-gui-linux-<arch> package
+# directory; the smoke extracts the same payload from the gui/ tree inside
+# the published feed archive (CLI + GUI tar.gz).
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - flatpak/**
+      - .github/workflows/flatpak-smoke.yml
+      - .github/workflows/release.yml
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Flatpak smoke (${{ matrix.asset }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - asset: linux-x86_64
+            runner: ubuntu-24.04
+          - asset: linux-arm64
+            runner: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install flatpak + flatpak-builder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes flatpak flatpak-builder
+      - name: Fetch the published release payload
+        run: |
+          set -euo pipefail
+          # The newest non-draft release's payload for this arch; the smoke
+          # test validates the pipeline, not a specific version.
+          VERSION="$(gh release list -R turlamai/regexmate --limit 5 --json tagName,isDraft --jq '.[] | select(.isDraft|not) | .tagName' | head -1 | sed 's/^v//')"
+          echo "Smoke payload version: ${VERSION}"
+          gh release download "v${VERSION}" -R turlamai/regexmate \
+            -p "regexmate-${VERSION}-${{ matrix.asset }}.tar.gz" -D . --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build the bundle (same steps as the release leg)
+        run: |
+          set -euo pipefail
+          VERSION="$(ls regexmate-*-linux-*.tar.gz | head -1 | sed -E 's/regexmate-([^-]+)-linux-.*/\1/')"
+          ASSET="${{ matrix.asset }}"
+          case "$ASSET" in
+            linux-x86_64) FPARCH=x86_64; GUI_ARCH=x86_64 ;;
+            linux-arm64)  FPARCH=aarch64; GUI_ARCH=aarch64 ;;
+            *) echo "::error::unsupported Linux asset: $ASSET"; exit 1 ;;
+          esac
+          flatpak --user remote-add --if-not-exists flathub \
+            https://flathub.org/repo/flathub.flatpakrepo
+          flatpak --user install -y --noninteractive flathub \
+            "org.gnome.Platform/${FPARCH}/50" "org.gnome.Sdk/${FPARCH}/50"
+          # The GUI payload from the feed archive, re-tarred under a single
+          # top-level entry exactly like the release leg stages it.
+          rm -rf payload flatpak-src
+          mkdir -p payload flatpak-src/regexmate-gui-linux-"${GUI_ARCH}"
+          tar -xzf "regexmate-${VERSION}-${ASSET}.tar.gz" -C payload
+          test -f payload/gui/RivetHost
+          test -f payload/gui/runtime/racket.boot
+          cp -a payload/gui/. "flatpak-src/regexmate-gui-linux-${GUI_ARCH}/"
+          tar -czf "regexmate-gui-linux-${GUI_ARCH}.tar.gz" \
+            -C flatpak-src "regexmate-gui-linux-${GUI_ARCH}"
+          SHA="$(sha256sum "regexmate-gui-linux-${GUI_ARCH}.tar.gz" | cut -d' ' -f1)"
+          sed -e "s/__VERSION__/${VERSION}/" -e "s/__ARCH__/${GUI_ARCH}/" \
+              -e "s/__SHA256__/${SHA}/" \
+              flatpak/site.jrtx.regexmate.yml > site.jrtx.regexmate.gen.yml
+          flatpak-builder --user --force-clean --disable-rofiles-fuse \
+            --repo=flatpak-repo flatpak-build site.jrtx.regexmate.gen.yml
+          flatpak build-bundle flatpak-repo \
+            "regexmate-${VERSION}-${ASSET}.flatpak" site.jrtx.regexmate stable
+          sha256sum "regexmate-${VERSION}-${ASSET}.flatpak" \
+            > "regexmate-${VERSION}-${ASSET}.flatpak.sha256"
+      - name: Sandbox execution check
+        run: |
+          set -euo pipefail
+          sudo apt-get install --yes xvfb x11-utils
+          Xvfb :99 -screen 0 1024x768x24 & xvfb_pid=$!
+          sleep 1
+          # Install the bundle from the local file: the runtime ref is
+          # already present, so nothing reaches for the network here.
+          DISPLAY=:99 flatpak --user install -y --noninteractive \
+            ./regexmate-*-linux-*.flatpak
+          DISPLAY=:99 flatpak run site.jrtx.regexmate > app-run.log 2>&1 & run_pid=$!
+          for _ in $(seq 1 20); do
+            flatpak ps --columns=application | grep -q site.jrtx.regexmate && break
+            sleep 1
+          done
+          # The sandboxed process is alive under its own instance.
+          flatpak ps --columns=application | grep site.jrtx.regexmate
+          sleep 8
+          # The window mapped on the display and the embedded backend booted
+          # (the RVT1 runtime layout resolves through /proc/self/exe inside
+          # the sandbox).
+          DISPLAY=:99 xwininfo -root -tree | grep -i regexmate
+          grep -qE "ready|listening|serve|backend" app-run.log || \
+            { echo "backend boot evidence missing"; tail -20 app-run.log; exit 1; }
+          kill "$run_pid" 2>/dev/null || pkill -f site.jrtx.regexmate || true
+          kill "$xvfb_pid" 2>/dev/null || true
+      - name: Dump build dirs (diagnosis)
+        if: failure()
+        run: |
+          find .flatpak-builder/build -maxdepth 3 | head -40 || true
+          find . -maxdepth 2 -name "*.tar.gz" -o -maxdepth 2 -name payload | head -10
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flatpak-smoke-${{ matrix.asset }}
+          path: regexmate-*.flatpak*
+          if-no-files-found: error

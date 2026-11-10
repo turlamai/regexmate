@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=RegexMate
+Comment=The regex workbench — match, explain, lint and graph patterns
+Exec=RivetHost
+Icon=site.jrtx.regexmate
+Terminal=false
+Categories=Development;Utility;
+StartupWMClass=RegexMate

@@ -357,6 +357,52 @@ jobs:
           done
           ls -la
 
+      # The Flatpak ships the GUI payload only (the rivet GTK4 host; the CLI
+      # is a terminal tool and stays in the feed archive). The feed tar.gz
+      # mixes CLI and GUI in raco-distribute layout, so re-tar the package
+      # directory rivet staged in dist/ under a single top-level entry —
+      # flatpak-builder strips it and the payload lands flat, the same
+      # shape every family manifest builds from.
+      - name: Flatpak bundle
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          ASSET="${{ matrix.asset }}"
+          case "$ASSET" in
+            linux-x86_64) FPARCH=x86_64; GUI_ARCH=x86_64 ;;
+            linux-arm64)  FPARCH=aarch64; GUI_ARCH=aarch64 ;;
+            *) echo "::error::unsupported Linux asset: $ASSET"; exit 1 ;;
+          esac
+          sudo apt-get install --yes flatpak flatpak-builder
+          # User-level everything: runner accounts install runtimes and
+          # build without root. GNOME 50 is the oldest supported platform
+          # runtime (48 went EOL 2026-03-24).
+          flatpak --user remote-add --if-not-exists flathub \
+            https://flathub.org/repo/flathub.flatpakrepo
+          flatpak --user install -y --noninteractive flathub \
+            "org.gnome.Platform/${FPARCH}/50" "org.gnome.Sdk/${FPARCH}/50"
+          rm -rf flatpak-src
+          mkdir -p "flatpak-src/regexmate-gui-linux-${GUI_ARCH}"
+          cp -a dist/regexmate-gui-linux-*/. "flatpak-src/regexmate-gui-linux-${GUI_ARCH}/"
+          tar -czf "regexmate-gui-linux-${GUI_ARCH}.tar.gz" \
+            -C flatpak-src "regexmate-gui-linux-${GUI_ARCH}"
+          # The manifest template carries version/arch/sha placeholders so
+          # the archive source's checksum is exact per release.
+          SHA="$(sha256sum "regexmate-gui-linux-${GUI_ARCH}.tar.gz" | cut -d' ' -f1)"
+          sed -e "s/__VERSION__/${VERSION}/" -e "s/__ARCH__/${GUI_ARCH}/" \
+              -e "s/__SHA256__/${SHA}/" \
+              flatpak/site.jrtx.regexmate.yml > site.jrtx.regexmate.gen.yml
+          # --disable-rofiles-fuse: runners have no /dev/fuse.
+          flatpak-builder --user --force-clean --disable-rofiles-fuse \
+            --repo=flatpak-repo flatpak-build site.jrtx.regexmate.gen.yml
+          flatpak build-bundle flatpak-repo \
+            "regexmate-${VERSION}-${ASSET}.flatpak" site.jrtx.regexmate stable
+          rm -rf flatpak-build flatpak-repo flatpak-src \
+            "regexmate-gui-linux-${GUI_ARCH}.tar.gz"
+          test -s "regexmate-${VERSION}-${ASSET}.flatpak"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -365,6 +411,7 @@ jobs:
             regexmate-*.tar.gz
             regexmate-*.zip
             regexmate-*.sha256
+            regexmate-*.flatpak
             regexmate-*-standalone.exe
             dist/regexmate-*.dmg
             dist/regexmate-*.msi
@@ -438,6 +485,7 @@ jobs:
             linux-amd64.deb linux-arm64.deb \
             linux-x86_64.rpm linux-aarch64.rpm \
             linux-x86_64.AppImage linux-aarch64.AppImage \
+            linux-x86_64.flatpak linux-arm64.flatpak \
             linux-x86_64.tar.gz linux-arm64.tar.gz \
             windows-x64.msi windows-x86_64.zip \
             windows-x86_64-standalone.exe \
@@ -453,7 +501,7 @@ jobs:
           done
           cp artifacts/update-manifest.json public/
           (cd public && sha256sum regexmate-* | LC_ALL=C sort -k2 > SHA256SUMS && sha256sum --check SHA256SUMS)
-          test "$(grep -c '^' public/SHA256SUMS)" -eq 25
+          test "$(grep -c '^' public/SHA256SUMS)" -eq 27
 
       - name: Build release body (changelog section + checksums)
         run: |

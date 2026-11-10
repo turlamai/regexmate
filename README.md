@@ -40,8 +40,8 @@ Download from [Releases](https://github.com/turlamai/regexmate/releases/latest) 
 | macOS 14+ (Apple Silicon) | `regexmate-<version>-macos-arm64.dmg` | `regexmate-<version>-macos-arm64.tar.gz` — CLI + `gui/regexmate-gui.app` |
 | macOS 14+ (Intel) | `regexmate-<version>-macos-x64.dmg` | `regexmate-<version>-macos-x64.tar.gz` — CLI + `gui/regexmate-gui.app` |
 | Windows 10+ x64 | `regexmate-<version>-windows-x64.msi` | `regexmate-<version>-windows-x86_64.zip` — CLI + `gui\regexmate-gui.exe` |
-| Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-x86_64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
-| Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage` | `regexmate-<version>-linux-arm64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
+| Linux x64 | `regexmate-<version>-linux-amd64.deb` · `.rpm` · `.AppImage`, or `regexmate-<version>-linux-x86_64.flatpak` (GUI-only Flatpak bundle, app id `site.jrtx.regexmate`; install with `flatpak --user install`) | `regexmate-<version>-linux-x86_64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
+| Linux arm64 | `regexmate-<version>-linux-arm64.deb` · `.rpm` · `.AppImage`, or `regexmate-<version>-linux-arm64.flatpak` (GUI-only Flatpak bundle, app id `site.jrtx.regexmate`; install with `flatpak --user install`) | `regexmate-<version>-linux-arm64.tar.gz` — CLI + `gui/RivetHost` (GTK4) |
 
 Every release publishes one verified `SHA256SUMS` covering versioned binaries and public SBOM/notices; per-file `.sha256` sidecars remain CI artifacts instead of duplicate release downloads. The CLI updates itself in place using an independently Ed25519-signed feed — see [Self-update](#self-update).
 
