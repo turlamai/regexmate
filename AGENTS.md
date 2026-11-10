@@ -62,3 +62,10 @@ Public default documentation is English; maintain complete Chinese user paths in
 ## Public product documentation
 
 The paired `docs/USER-GUIDE.md` / `docs/USER-GUIDE.zh-CN.md` own the public installation, first-use, data/recovery, privacy and availability path. Keep the homepage and both README entry points aligned with them when behavior changes. Detailed technical contracts and the current implementation queue retain their existing owners. Do not publish target prices, a purchase link or a ready/secure/platform claim before its release evidence exists.
+
+## 设计流程（原型先行）
+
+所有 UI 开发与界面改造一律先原型后代码：brief → `design/DESIGN.md`
+视觉契约 → HTML 原型 → 按 HIG 基准评审通过才开工；改界面先改原型再改
+代码。契约与原型放本仓 `design/`（尚未建立时随首个 UI 切片建立），
+实物截图验收后才能作为对外宣传素材。
