@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 concurrency:
   group: release-${{ github.ref }}
@@ -486,6 +488,10 @@ jobs:
             public/SHA256SUMS
           body_path: release-body.md
           generate_release_notes: true
+      - name: Attest public build provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: public/*
       - name: Reject stale release aliases on retry
         env:
           GH_TOKEN: ${{ github.token }}
