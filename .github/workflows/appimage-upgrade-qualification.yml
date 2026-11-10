@@ -281,8 +281,7 @@ jobs:
           OUTPUT_JSON=/tmp/qual/bad-signature.json \
           racket scripts/acceptance/upgrade-qualification.rkt
           # a refused manifest must never reach the install tree
-          test -z "$(find /tmp/qual/install -maxdepth 1 -name 'regexmate-update-*' -o -maxdepth 1 -name updates | wc -l)"
-          test -z "$(ls -A /tmp/qual/install/updates 2>/dev/null || true)"
+          test -z "$(find /tmp/qual/install -maxdepth 1 \( -name 'regexmate-update-*' -o -name updates \) -print -quit)"
           touch /tmp/qual/bad-signature.ok
 
       - name: Drive the shipped `regexmate update` path through the live feed
