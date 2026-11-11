@@ -56,3 +56,19 @@ Tokens 逐值提取自 `macos-host/Sources/RivetHost/DesignSystem.swift`（其�
 4. 数字、跨度、模式、匹配文本一律等宽字体；UI 文案英文，中文经语言设置提供；破坏性 / 批量操作（Apply replacement）必须显式确认（按钮带 …，先预览后应用），永不静默执行。
 5. 键盘提示统一 `kbd` 样式（surface 底、hairline 边、ink-3 字）；三宿主交互语义一致（契约跨平台规则：语义是产品契约，呈现归各腿）。
 6. zero-width 匹配是一等行（`∅` + 「zero-width at N」），检查它把光标放到该偏移；检查选择永不落在已消失的匹配上。
+
+
+## 平台映射与差异声明（预钉 · 宿主实现时升级为落点表）
+
+统一层（三平台必须一致，`design/prototype/` 原型已锁定）：信息架构、核心流程、快捷键语义、
+语义色与层级词汇。因地制宜层（按平台惯例落地，不预画像素）：
+
+| 维度 | macOS | Windows | Linux |
+|---|---|---|---|
+| 修饰键 | ⌘ | Ctrl | Ctrl |
+| 命令入口 | 原生菜单栏 | 菜单栏/命令行内 | 菜单栏 |
+| 字体 | 系统栈 + PingFang SC | 系统栈 + Microsoft YaHei | 系统栈 + Noto Sans CJK |
+| 原生控件 | SwiftUI 控件 | WinUI 3 控件 | GTK4 控件 |
+
+差异声明纪律：宿主特例必须先写进本节才能实现；未声明的宿主差异按违约处理
+（案例：taskly 漂移台账 D8）。
