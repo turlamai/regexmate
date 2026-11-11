@@ -21,7 +21,7 @@
     line-height: 1.7;
 }
 
-/* Framed workbench caption under the hero. */
+/* Framed workbench screenshot + caption under the hero. */
 .rx-shot-frame {
     max-width: 720px;
     margin: 40px auto 0;
@@ -33,6 +33,14 @@
     color: var(--kit-text-2);
     line-height: 1.7;
 }
+.rx-shot-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--kit-border);
+    border-radius: var(--kit-radius-m);
+}
+.rx-shot-frame figcaption { margin: 14px 0 0; }
 
 /* Bento wide cells span two columns of the 3-col grid. */
 .rx-wide { grid-column: span 2; }
