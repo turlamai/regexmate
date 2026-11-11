@@ -89,6 +89,20 @@ jobs:
           - os: windows-latest
             asset: windows-x86_64
             racket-arch: x64
+    env:
+      # Production signing lights up as soon as the account-level secrets
+      # exist (Developer ID p12 + App Store Connect API key) and applies to
+      # every workflow run that has them. Credential contract:
+      # DEVELOPER_ID_P12_B64 / DEVELOPER_ID_P12_PASSWORD / ASC_KEY_ID /
+      # ASC_ISSUER_ID / ASC_KEY_P8_B64; see rivet docs/production-signing.md.
+      # Inert on the linux/windows legs — every step below that reads these
+      # gates is additionally pinned to runner.os == 'macOS'.
+      MACOS_SIGNING_CONFIGURED: ${{ secrets.DEVELOPER_ID_P12_B64 != '' && secrets.ASC_KEY_P8_B64 != '' }}
+      # A tag push is a release: without credentials it must fail closed
+      # instead of silently shipping ad-hoc signed artifacts. (This workflow
+      # currently only fires on v* tags; the dispatch branch exists so a
+      # future manual trigger keeps its ad-hoc smoke path.)
+      IS_TAG_RELEASE: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
     steps:
       - uses: actions/checkout@v4
@@ -174,12 +188,66 @@ jobs:
         if: runner.os == 'Linux'
         uses: turlamai/rivet/.github/actions/setup-embed-racket@9d766b4acab672844093204cb4845ef4ef933d2c
 
+      # macOS production signing (mirror of taskly PR #122): provision the
+      # Developer ID certificate and the notarytool profile exactly once, and
+      # let rivet's release do sign + notarize + staple + re-verify.
+      - name: Provision Developer ID certificate
+        if: runner.os == 'macOS' && env.MACOS_SIGNING_CONFIGURED == 'true'
+        env:
+          DEVELOPER_ID_P12_B64: ${{ secrets.DEVELOPER_ID_P12_B64 }}
+          DEVELOPER_ID_P12_PASSWORD: ${{ secrets.DEVELOPER_ID_P12_PASSWORD }}
+        run: |
+          set -euo pipefail
+          P12="$RUNNER_TEMP/developer-id.p12"
+          KEYCHAIN="$RUNNER_TEMP/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(openssl rand -hex 24)"
+          printf '%s' "$DEVELOPER_ID_P12_B64" | base64 --decode > "$P12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security import "$P12" -k "$KEYCHAIN" -P "$DEVELOPER_ID_P12_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN" > /dev/null
+          security list-keychains -s "$KEYCHAIN" $(security list-keychains | tr -d '"')
+          rm -f "$P12"
+          IDENTITY_NAME="$(security find-identity -v -p codesigning "$KEYCHAIN" | grep 'Developer ID Application' | head -1 | sed -E 's/^[^"]*"(.*)"$/\1/')"
+          test -n "$IDENTITY_NAME"
+          # rivet reads exactly these two (rivet docs/production-signing.md);
+          # release defaults to production mode, so exporting them alone
+          # flips packaging over once --development is dropped below.
+          {
+            echo "RIVET_MACOS_SIGN_IDENTITY=$IDENTITY_NAME"
+            echo "RIVET_MACOS_NOTARY_PROFILE=ASC_NOTARY"
+          } >> "$GITHUB_ENV"
+      - name: Store notarytool keychain profile
+        if: runner.os == 'macOS' && env.MACOS_SIGNING_CONFIGURED == 'true'
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8_B64 }}
+        run: |
+          set -euo pipefail
+          P8="$RUNNER_TEMP/asc-api-key.p8"
+          printf '%s' "$ASC_KEY_P8_B64" | base64 --decode > "$P8"
+          xcrun notarytool store-credentials ASC_NOTARY \
+            --key-id "$ASC_KEY_ID" --issuer "$ASC_ISSUER_ID" --key "$P8"
+          rm -f "$P8"
+
       # One command builds the native GUI package, every human installer for
       # this platform (dmg / msi / deb + rpm + AppImage), the SBOM and the
       # third-party notices — and launch-smokes the packaged app. The
       # CLI-first distribution (the feed archive assembled below) is built
       # separately so the self-update payload keeps its exact proven layout.
-      - name: Release installers (rivet)
+      # Three states (taskly PR #122), macOS-only legs:
+      #   secrets present            -> production (rivet defaults to it)
+      #   secrets missing, dispatch  -> ad-hoc development smoke
+      #   secrets missing, tag push  -> fail closed, no release
+      # Non-macOS legs always take the ad-hoc branch below, unchanged.
+      - name: Release installers (rivet, Developer ID + notarized)
+        if: runner.os == 'macOS' && env.MACOS_SIGNING_CONFIGURED == 'true'
+        shell: bash
+        run: raco rivet release --without-updates
+      - name: Release installers (rivet, ad-hoc)
+        if: runner.os != 'macOS' || (env.MACOS_SIGNING_CONFIGURED != 'true' && env.IS_TAG_RELEASE != 'true')
         shell: bash
         run: |
           if [ '${{ runner.os }}' = 'Linux' ]; then
@@ -187,10 +255,24 @@ jobs:
             export APPIMAGE_EXTRACT_AND_RUN=1
           fi
           raco rivet release --development --without-updates
+      - name: Release requires signing credentials
+        if: runner.os == 'macOS' && env.MACOS_SIGNING_CONFIGURED != 'true' && env.IS_TAG_RELEASE == 'true'
+        shell: bash
+        run: |
+          echo "::error::Tag releases must be production-signed: set the macOS signing secrets (DEVELOPER_ID_P12_B64, DEVELOPER_ID_P12_PASSWORD, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8_B64) on this repository before tagging."
+          exit 1
+      - name: Restore the GUI package for the feed archive (rivet package)
+        shell: bash
+        run: |
+          if [ '${{ runner.os }}' = 'Linux' ]; then
+            export PATH="$(dirname "$FULL_RACKET_RACO"):$PATH"
+            export APPIMAGE_EXTRACT_AND_RUN=1
+          fi
           # release cleans up its staging, taking dist/<name>.app with it;
           # package restores it for the feed-archive bundling below — the
           # native build is cached in .rivet/build, so this is a copy plus
-          # a launch smoke, not a rebuild
+          # a launch smoke, not a rebuild. It only recovers whatever the
+          # release above produced (already stapled in production mode).
           raco rivet package
 
       - name: Bundle the GUI into the feed archive staging (all platforms)
