@@ -21,24 +21,18 @@ Tokens 逐值提取自 `macos-host/Sources/RivetHost/DesignSystem.swift`（其�
 - **输入不是运行**（契约规则 3）：模式键入只更新草稿；提交走 Return / ⌘R；样文编辑是唯一自动运行路径（300ms 防抖）。
 - **键盘一等公民**：三表面 Tab 循环（pattern field → match list → sample editor）；⌘R 运行、⌘G / ⇧⌘G 检查导航、⇧⌘U 检查更新、⌘A 全选；鼠标不嗨也能完整操作。
 
-## Tokens（与实现 1:1，来源 `DesignSystem.swift`）
+## Tokens（语义；值不在此复制，来源 `DesignSystem.swift`）
 
-| Token | Light | Dark | 用途 |
-|---|---|---|---|
-| `--bg` | `#FAFAF8` | `#0A0A0B` | 画布 |
-| `--bg-soft` | `#F3F3F0` | `#121214` | 工具栏 / 状态栏 / 分区底 |
-| `--surface` | `#FFFFFF` | `#17171A` | 卡片 / 浮层 / 输入 |
-| `--ink` | `#1D1D1F` | `#F5F5F7` | 主文字 |
-| `--ink-2` | `#55555A` | `#A1A1A6` | 次级文字 |
-| `--ink-3` | `#86868B` | `#6E6E73` | 辅助文字 / 图标 / 占位 |
-| `--hairline` | `rgb(0 0 0 / .10)` | `rgb(255 255 255 / .12)` | 分隔线 / 描边 |
-| `--accent` | `#037A55` | `#3ECF8E` | 选中 / 检查 / 进行态 / 主按钮 / ok |
-| `--accent-tint` | `rgb(3 122 85 / .10)` | `rgb(62 207 142 / .12)` | chip / 徽标弱底 |
-| `--match` | `rgb(3 122 85 / .18)` | `rgb(62 207 142 / .26)` | 匹配高亮 pill（内容主角色） |
-| `--match-strong`（推导） | `rgb(3 122 85 / .38)` | `rgb(62 207 142 / .50)` | 当前检查 pill |
-| `--danger` | `#D92D20` | `#FF6369` | 错误态 / 非法模式 / fail |
-| `--warning` | `#B54708` | `#FFB35C` | lint 警告 / 灾难性回溯 |
-| `--canvas` | `#FFFFFF` | `#FFFFFF` | railroad 画布（两主题恒白，品牌规则） |
+值类 token 真源 = `macos-host/Sources/RivetHost/DesignSystem.swift`（上游为 `site/styles.css` 家族站点体系，macOS 注释原文「Neutrals first, one accent, generous whitespace, hairline structure」）；匹配高亮值取自 `ContentView.swift` 的 highlightColor；原型 `design/prototype/shared.css` 与其一一对应，本表只记语义与推导状态。标注（推导）的值是原型为补齐实现尚未覆盖的状态所设，实现落地时回填实现。
+
+| Token | 语义 |
+|---|---|
+| `--bg --bg-soft --surface --hairline` | 画布 / 工具栏状态栏分区底 / 卡片浮层输入 / 分隔描边 |
+| `--ink --ink-2 --ink-3` | 主/次级/辅助文字三档 |
+| `--accent --accent-tint` | 选中/检查/进行态/主按钮（兼 ok 语义）+ chip 徽标弱底 |
+| `--match --match-strong`（推导） | 匹配高亮 pill（内容主角色）/ 当前检查 pill |
+| `--danger --warning` | 错误态/非法模式/fail / lint 警告/灾难性回溯 |
+| `--canvas` | railroad 画布（两主题恒白，品牌规则） |
 
 - **字体**：界面 `system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei"`；模式 / 样文 / 跨度 / 计数一律等宽 `"SF Mono", ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas`。正文 13px/1.55；节标题 11px/600/0.06em 全大写；模式栏 13.5px 等宽；状态栏 11.5px。
 - **圆角**：窗口 12（原型壳）· 卡片 10（radiusS）· 模式栏 8 · 控件 6。**间距节奏**：4/8/12/16。**动效**：120ms ease，不过度，尊重 `prefers-reduced-motion`。
