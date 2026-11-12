@@ -489,7 +489,7 @@ void on_sample_changed(GtkTextBuffer*, gpointer) {
   schedule_refresh();
 }
 
-void on_pattern_changed(GtkEntryBuffer*, guint, guint, gpointer) {
+void on_pattern_changed(GtkEditable*, gpointer) {
   schedule_refresh();
 }
 
@@ -876,7 +876,9 @@ void on_activate(GtkApplication* app, gpointer) {
   g_signal_connect(refresh, "clicked", G_CALLBACK(on_refresh_clicked), nullptr);
   g_signal_connect(pattern, "activate", G_CALLBACK(on_pattern_activate),
                    nullptr);
-  g_signal_connect(gtk_entry_get_buffer(GTK_ENTRY(pattern)), "changed",
+  // GtkEntryBuffer has no "changed" signal in GTK4; GtkEditable does.
+  // Live edits must schedule the same refresh as the Run button.
+  g_signal_connect(pattern, "changed",
                    G_CALLBACK(on_pattern_changed), nullptr);
   g_signal_connect(gtk_text_view_get_buffer(g_state.sample), "changed",
                    G_CALLBACK(on_sample_changed), nullptr);
