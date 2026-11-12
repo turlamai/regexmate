@@ -1,7 +1,7 @@
 #lang racket
 
 (require rackunit
-         "../core/tester.rkt")
+         "../racket/core/tester.rkt")
 
 (define tester-tests
   (test-suite

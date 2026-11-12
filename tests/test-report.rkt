@@ -3,7 +3,7 @@
 (require rackunit
          racket/string
          racket/port
-         (file "../output/report.rkt"))
+         (file "../racket/output-format/report.rkt"))
 
 (define report-tests
   (test-suite

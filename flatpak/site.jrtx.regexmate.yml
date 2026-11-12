@@ -83,7 +83,7 @@ modules:
         path: regexmate-gui-linux-__ARCH__.tar.gz
         sha256: __SHA256__
       - type: file
-        path: branding/app-icon-linux-512.png
+        path: assets/branding/app-icon-linux-512.png
       - type: file
         path: flatpak/site.jrtx.regexmate.desktop
     build-commands:

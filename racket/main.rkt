@@ -10,16 +10,16 @@
          "core/tester.rkt"
          "core/linter.rkt"
          "core/cookbook.rkt"
-         "output/report.rkt"
+         "output-format/report.rkt"
          "core/updater.rkt"
          (only-in rivet/distribution
                   update-manifest-version
                   update-artifact-url
                   update-artifact-installer)
-         "output/json-format.rkt"
-         "output/highlight.rkt"
-         "output/human-format.rkt"
-         "output/railroad.rkt"
+         "output-format/json-format.rkt"
+         "output-format/highlight.rkt"
+         "output-format/human-format.rkt"
+         "output-format/railroad.rkt"
          "server/mcp.rkt")
 
 ;; RegexMate CLI.

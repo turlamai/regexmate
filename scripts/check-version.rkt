@@ -19,7 +19,7 @@
       (error 'check-version "no (define version \"...\") found in info.rkt")))
 
 (define (module-version)
-  (dynamic-require "version.rkt" 'regexmate-version))
+  (dynamic-require "racket/version.rkt" 'regexmate-version))
 
 (define (file-version)
   (string-trim (file->string "VERSION")))
@@ -47,7 +47,7 @@
              "check-version: ~a has ~s but info.rkt has ~s\n" where value iv)
     (exit 1)))
 
-(must-agree "version.rkt" (module-version))
+(must-agree "racket/version.rkt" (module-version))
 (must-agree "VERSION" (file-version))
 (must-agree "rivet.rktd" (rktd-version))
 (must-agree "README.md" (readme-badge "README.md"))

@@ -3,15 +3,15 @@
 (require rackunit
          rackunit/text-ui)
 
-(require "tests/test-regex-engine.rkt")
-(require "tests/test-regex-parser.rkt")
-(require "tests/test-human-format.rkt")
-(require "tests/test-json-format.rkt")
-(require "tests/test-tester.rkt")
-(require "tests/test-linter.rkt")
-(require "tests/test-cookbook.rkt")
-(require "tests/test-updater.rkt")
-(require "tests/test-report.rkt")
+(require "../tests/test-regex-engine.rkt")
+(require "../tests/test-regex-parser.rkt")
+(require "../tests/test-human-format.rkt")
+(require "../tests/test-json-format.rkt")
+(require "../tests/test-tester.rkt")
+(require "../tests/test-linter.rkt")
+(require "../tests/test-cookbook.rkt")
+(require "../tests/test-updater.rkt")
+(require "../tests/test-report.rkt")
 
 (define all-tests
   (test-suite

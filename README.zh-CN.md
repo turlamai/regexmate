@@ -60,9 +60,9 @@ raco pkg install https://github.com/turlamai/regexmate.git
 ```bash
 git clone https://github.com/turlamai/regexmate
 cd regexmate
-raco make main.rkt
-racket run-tests.rkt          # 测试套件
-raco exe -o regexmate main.rkt  # 产出本地二进制
+raco make racket/main.rkt
+racket racket/run-tests.rkt          # 测试套件
+raco exe -o regexmate racket/main.rkt  # 产出本地二进制
 ```
 
 ## 快速上手
@@ -189,7 +189,7 @@ RegexMate 用 Racket 的 `pregexp` 引擎校验与匹配。支持：`. ^ $ * + ?
 ## 开发
 
 ```bash
-racket run-tests.rkt      # 单元测试
+racket racket/run-tests.rkt  # 单元测试
 bash scripts/smoke.sh     # CLI 端到端冒烟
 racket scripts/check-version.rkt v1.0.0   # 发布门禁
 ```
@@ -200,22 +200,23 @@ CI 在 Ubuntu、Windows、macOS 三平台 × Racket 9.2 上运行单元测试与
 
 ```
 regexmate/
-├── main.rkt                 # CLI 入口
-├── version.rkt              # 运行时版本（须与 info.rkt 一致）
+├── racket/                  # Racket 引擎 + CLI
+│   ├── main.rkt             # CLI 入口
+│   ├── version.rkt          # 运行时版本（须与 info.rkt 一致）
+│   ├── run-tests.rkt        # 测试驱动
+│   ├── core/                # 正则 AST、解析器、引擎、i18n
+│   ├── output-format/       # JSON 信封、人类输出、ANSI、铁路图
+│   └── server/mcp.rkt       # stdio MCP server
 ├── info.rkt                 # Racket 包元数据
-├── core/                    # 正则 AST、解析器、引擎、i18n
-├── output/                  # JSON 信封、人类输出、ANSI、铁路图
-├── server/
-│   └── mcp.rkt              # stdio MCP server
 ├── app/
 │   └── backend.rkt          # Rivet 后端（GUI 的类型化 RPC 面）
 ├── macos-host/              # SwiftUI 宿主（SwiftPM）
 ├── windows/                 # WinUI 3 宿主（C++/WinRT）
 ├── linux/                   # GTK4 宿主（CMake）
-├── branding/                # 应用图标（分平台源、.icns、.ico、.png）
+├── assets/branding/         # 应用图标（分平台源、.icns、.ico、.png）
 ├── tests/                   # rackunit 测试套件
 ├── scripts/                 # smoke.sh、check-version.rkt
-├── docs/                    # 产品主页（GitHub Pages）
+├── docs/                    # 产品指南与契约文档
 └── .github/workflows/       # ci.yml、release.yml
 ```
 

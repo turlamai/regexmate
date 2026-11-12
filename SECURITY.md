@@ -19,20 +19,20 @@ In scope:
 
 - The regex evaluation engine surface: pattern parsing, matching,
   replacement, explanation and lint findings
-  (`core/regex-parser.rkt`, `core/regex-engine.rkt`, `core/ast.rkt`,
-  `core/linter.rkt`, `core/tester.rkt`). Pathological patterns must not
+  (`racket/core/regex-parser.rkt`, `racket/core/regex-engine.rkt`,
+  `racket/core/ast.rkt`, `racket/core/linter.rkt`, `racket/core/tester.rkt`). Pathological patterns must not
   hang the process (the lint exists to flag catastrophic backtracking),
   and engine findings surfaced to an agent must not misrepresent the
   match result.
 - Update trust: verification of the Ed25519-signed
   `update-manifest.json`, artifact digest/size checks against the
-  signed manifest, and key handling (`core/updater.rkt`,
+  signed manifest, and key handling (`racket/core/updater.rkt`,
   `scripts/make-update-manifest.sh`, `scripts/check-release-update-key.py`;
   key id `regexmate-2026-10`, trust root embedded in
-  `version.rkt`). The update channel resolves against the canonical
+  `racket/version.rkt`). The update channel resolves against the canonical
   `turlamai/regexmate` GitHub Releases; anything that would redirect it
   elsewhere is a bug.
-- The MCP server surface (`server/mcp.rkt`): a stdio server that
+- The MCP server surface (`racket/server/mcp.rkt`): a stdio server that
   exposes the seven tools to coding agents. It must not open network
   listeners, execute shell commands derived from pattern or subject
   input, or widen access beyond the declared tools.

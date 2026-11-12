@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- aligned with branding/app-icon-windows.svg (same mark, 512 grid) -->
+  <!-- aligned with assets/branding/app-icon-windows.svg (same mark, 512 grid) -->
   <rect width="512" height="512" rx="115" fill="#037A55"/>
   <circle cx="161" cy="318" r="52" fill="#FFFFFF"/>
   <g stroke="#FFFFFF" stroke-width="37" stroke-linecap="round" fill="none">

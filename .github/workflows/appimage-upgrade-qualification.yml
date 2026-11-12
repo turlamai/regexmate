@@ -22,7 +22,7 @@ name: Published upgrade qualification (N -> N+1)
 # field postdates rivet v0.11.0, whose updater-config has no component and
 # matches by platform/arch/installer only), so no updater overlay is
 # needed; if a future published tag ever ships a broken updater, overlay
-# core/updater.rkt from main the same way the driver is overlaid.
+# racket/core/updater.rkt from main the same way the driver is overlaid.
 
 on:
   workflow_dispatch:

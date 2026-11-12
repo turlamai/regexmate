@@ -42,7 +42,7 @@ Tokens 逐值提取自 `macos-host/Sources/RivetHost/DesignSystem.swift`（其�
 
 - **字体**：界面 `system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei"`；模式 / 样文 / 跨度 / 计数一律等宽 `"SF Mono", ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas`。正文 13px/1.55；节标题 11px/600/0.06em 全大写；模式栏 13.5px 等宽；状态栏 11.5px。
 - **圆角**：窗口 12（原型壳）· 卡片 10（radiusS）· 模式栏 8 · 控件 6。**间距节奏**：4/8/12/16。**动效**：120ms ease，不过度，尊重 `prefers-reduced-motion`。
-- **语言**：界面文案英文（跟随三宿主现状）；中文路径 = CLI `--lang zh` 与设置页语言项（引擎 `core/i18n.rkt` 已支持）；match / span / group 等术语保留英文不硬翻。
+- **语言**：界面文案英文（跟随三宿主现状）；中文路径 = CLI `--lang zh` 与设置页语言项（引擎 `racket/core/i18n.rkt` 已支持）；match / span / group 等术语保留英文不硬翻。
 
 ## 组件词汇
 

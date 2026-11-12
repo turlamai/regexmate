@@ -307,7 +307,7 @@ regexmate_graph · regexmate_test · regexmate_lint · regexmate_cookbook</div>
             <!-- =================== FAQ: platforms =================== -->
             <section class="manual-section" id="faq-platforms">
                 <h2 class="manual-h2"><span class="h2-emoji">🖥️</span><span data-i18n="gd.faq.plat.title">FAQ · 平台覆盖</span></h2>
-                <p data-i18n="gd.faq.plat.p1">每个 release 提供两类资产：人类安装器（dmg / msi / deb / rpm / AppImage）与便携压缩包（CLI + GUI）。架构覆盖如下（其余架构请从源码构建：<code>raco exe -o regexmate main.rkt</code>，需 Racket 9.x）：</p>
+                <p data-i18n="gd.faq.plat.p1">每个 release 提供两类资产：人类安装器（dmg / msi / deb / rpm / AppImage）与便携压缩包（CLI + GUI）。架构覆盖如下（其余架构请从源码构建：<code>raco exe -o regexmate racket/main.rkt</code>，需 Racket 9.x）：</p>
                 <table class="syntax-table">
                     <thead>
                         <tr>
@@ -456,7 +456,7 @@ regexmate_graph · regexmate_test · regexmate_lint · regexmate_cookbook</div>
             "gd.contract.e3": "语法有效但零匹配 / 零替换 / 用例失败 / lint --strict 有发现",
             "gd.contract.p3": "正则方言是 Racket <code>pregexp</code>：支持环视、原子组、内嵌旗标、POSIX/Unicode 类、反向引用；不支持命名组 <code>(?&lt;name&gt;…)</code>、<code>\\A</code>/<code>\\z</code>、<code>\\x41</code>——validate 会明确拒绝。",
             "gd.faq.plat.title": "FAQ · 平台覆盖",
-            "gd.faq.plat.p1": "每个 release 提供两类资产：人类安装器（dmg / msi / deb / rpm / AppImage）与便携压缩包（CLI + GUI）。架构覆盖如下（其余架构请从源码构建：<code>raco exe -o regexmate main.rkt</code>，需 Racket 9.x）：",
+            "gd.faq.plat.p1": "每个 release 提供两类资产：人类安装器（dmg / msi / deb / rpm / AppImage）与便携压缩包（CLI + GUI）。架构覆盖如下（其余架构请从源码构建：<code>raco exe -o regexmate racket/main.rkt</code>，需 Racket 9.x）：",
             "gd.faq.plat.th1": "资产", "gd.faq.plat.th2": "平台", "gd.faq.plat.th3": "内容",
             "gd.faq.plat.p4": "macOS 14+（Apple Silicon）",
             "gd.faq.plat.p8": "macOS 14+（Intel）", "gd.faq.plat.p9": "Linux arm64（GUI 需 GTK4）", "gd.faq.plat.p10": "GUI 安装器",
@@ -538,7 +538,7 @@ regexmate_graph · regexmate_test · regexmate_lint · regexmate_cookbook</div>
             "gd.contract.e3": "valid pattern, zero matches / zero replacements / failing cases / lint --strict findings",
             "gd.contract.p3": "The flavor is Racket <code>pregexp</code>: lookarounds, atomic groups, scoped flags, POSIX/Unicode classes and backreferences are supported; named groups <code>(?&lt;name&gt;…)</code>, <code>\\A</code>/<code>\\z</code> and <code>\\x41</code> are not — validate rejects them explicitly.",
             "gd.faq.plat.title": "FAQ · Platforms",
-            "gd.faq.plat.p1": "Every release ships two asset families: human installers (dmg / msi / deb / rpm / AppImage) and portable archives (CLI + GUI). Architecture coverage (anything else: build from source with <code>raco exe -o regexmate main.rkt</code>, Racket 9.x):",
+            "gd.faq.plat.p1": "Every release ships two asset families: human installers (dmg / msi / deb / rpm / AppImage) and portable archives (CLI + GUI). Architecture coverage (anything else: build from source with <code>raco exe -o regexmate racket/main.rkt</code>, Racket 9.x):",
             "gd.faq.plat.th1": "Asset", "gd.faq.plat.th2": "Platform", "gd.faq.plat.th3": "Contents",
             "gd.faq.plat.p4": "macOS 14+ (Apple Silicon)",
             "gd.faq.plat.p8": "macOS 14+ (Intel)", "gd.faq.plat.p9": "Linux arm64 (GUI needs GTK4)", "gd.faq.plat.p10": "GUI installer",

@@ -1,8 +1,8 @@
 #lang racket
 
 (require rackunit
-         "../output/json-format.rkt"
-         "../core/regex-engine.rkt")
+         "../racket/output-format/json-format.rkt"
+         "../racket/core/regex-engine.rkt")
 
 ;; The format-* functions return jsexpr hashes; jsexpr->line serializes
 ;; them for stdout. These tests check the contract fields directly.

@@ -1,8 +1,8 @@
 #lang racket
 
 (require rackunit
-         "../core/regex-parser.rkt"
-         "../core/ast.rkt")
+         "../racket/core/regex-parser.rkt"
+         "../racket/core/ast.rkt")
 
 (define regex-parser-tests
   (test-suite

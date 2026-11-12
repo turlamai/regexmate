@@ -1,7 +1,7 @@
 #!/bin/bash
 # RegexMate CLI smoke test — run from repo root
 set -u
-R="racket main.rkt"
+R="racket racket/main.rkt"
 PASS=0; FAIL=0
 
 check() { # desc expected_exit actual_exit

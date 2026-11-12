@@ -9,8 +9,8 @@
          racket/port
          racket/string
          (except-in rivet/distribution version<? platform-symbol architecture-symbol)
-         "../core/updater.rkt"
-         "../version.rkt")
+         "../racket/core/updater.rkt"
+         "../racket/version.rkt")
 
 ;; rivet/distribution pins libcrypto at module load; match it here so the
 ;; generated test keys come from the same provider the updater uses

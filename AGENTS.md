@@ -8,18 +8,18 @@ RegexMate——agent 时代的正则工作台（validate/match/explain/replace/g
 
 ## 结构
 
-- `core/` — Racket 引擎核心；`server/` — MCP/服务侧
-- `app/` — 引擎入口（`main.rkt`）；`tests/` — Racket 测试（`run-tests.rkt` 驱动）
+- `racket/` — Racket 引擎与 CLI：`racket/core/`（引擎核心）、`racket/output-format/`（JSON/人类输出/ANSI/铁路图）、`racket/server/`（MCP/服务侧）、`racket/main.rkt`（CLI 入口）、`racket/version.rkt`、`racket/run-tests.rkt`（测试驱动）
+- `app/` — Rivet backend（GUI 的 typed RPC 面）；`tests/` — Racket 测试
 - `macos-host/`（SwiftUI）、`windows/`（WinUI3）、`linux/`（GTK4）— 三宿主腿，对应平台机器独占开发
-- `scripts/`、`build/`、`branding/`、`docs/`；`compiled/`、`output/`、`dist/` 为本地产物不提交
+- `scripts/`、`build/`、`assets/branding/`、`docs/`；`compiled/`、`dist/` 为本地产物不提交
 
 ## 常用命令
 
 ```bash
 # 引擎测试（CI 同款）
 raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#9d766b4acab672844093204cb4845ef4ef933d2c' crypto
-raco make main.rkt run-tests.rkt
-racket run-tests.rkt
+raco make racket/main.rkt racket/run-tests.rkt
+racket racket/run-tests.rkt
 racket scripts/check-version.rkt        # 版本对齐门禁
 raco rivet schema check rivet-schema.json --json
 raco rivet doctor --release             # rivet 发布门禁（生成物新鲜度/pin/更新API关键词）

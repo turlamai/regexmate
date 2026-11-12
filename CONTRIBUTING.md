@@ -18,13 +18,13 @@ change date (2030-10-22) as the rest of the Work.
    every platform. Never weaken a requirement in
    `rivet-acceptance.rktd` to make a change green.
 3. **The six version sources agree.** `VERSION`, `info.rkt`,
-   `version.rkt`, `rivet.rktd` and the shields.io badges in both
+   `racket/version.rkt`, `rivet.rktd` and the shields.io badges in both
    READMEs must state the same version —
    `racket scripts/check-version.rkt` enforces it, and a tagged
    release additionally requires the git tag and a `## [x.y.z]`
    CHANGELOG section to match.
 4. **Bilingual is one product.** User-facing engine strings live in
-   `core/i18n.rkt` (en default, zh opt-in); an English string added or
+   `racket/core/i18n.rkt` (en default, zh opt-in); an English string added or
    changed gets its Chinese counterpart in the same commit.
 5. **Fail honestly.** A failed update verification aborts the update
    and the running version keeps working. Report what failed and what
@@ -35,8 +35,8 @@ change date (2030-10-22) as the rest of the Work.
 ## Before you push
 
 ```bash
-raco make main.rkt run-tests.rkt          # compile engine + tests
-racket run-tests.rkt                      # core contract tests
+raco make racket/main.rkt racket/run-tests.rkt  # compile engine + tests
+racket racket/run-tests.rkt               # core contract tests
 racket scripts/check-version.rkt          # six-source version gate
 raco rivet schema check rivet-schema.json --json
 bash scripts/smoke.sh                     # CLI smoke

@@ -13,15 +13,15 @@
          racket/match
          racket/port
          pict
-         "../core/ast.rkt"
-         "../core/regex-engine.rkt"
-         "../core/regex-parser.rkt"
-         "../core/linter.rkt"
-         "../core/updater.rkt"
-         "../output/human-format.rkt"
-         "../output/report.rkt"
-         "../output/railroad.rkt"
-         "../version.rkt")
+         "../racket/core/ast.rkt"
+         "../racket/core/regex-engine.rkt"
+         "../racket/core/regex-parser.rkt"
+         "../racket/core/linter.rkt"
+         "../racket/core/updater.rkt"
+         "../racket/output-format/human-format.rkt"
+         "../racket/output-format/report.rkt"
+         "../racket/output-format/railroad.rkt"
+         "../racket/version.rkt")
 
 (provide start)
 

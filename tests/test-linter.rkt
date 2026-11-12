@@ -1,7 +1,7 @@
 #lang racket
 
 (require rackunit
-         "../core/linter.rkt")
+         "../racket/core/linter.rkt")
 
 (define linter-tests
   (test-suite

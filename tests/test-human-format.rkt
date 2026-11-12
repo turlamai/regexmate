@@ -1,10 +1,10 @@
 #lang racket
 
 (require rackunit
-         (only-in "../output/highlight.rkt" highlight-with-ansi)
-         "../core/i18n.rkt"
-         "../output/highlight.rkt"
-         "../output/human-format.rkt")
+         (only-in "../racket/output-format/highlight.rkt" highlight-with-ansi)
+         "../racket/core/i18n.rkt"
+         "../racket/output-format/highlight.rkt"
+         "../racket/output-format/human-format.rkt")
 
 (define human-format-tests
   (test-suite

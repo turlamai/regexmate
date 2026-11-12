@@ -18,7 +18,7 @@ HEADER = bytes.fromhex("302a300506032b6570032100")
 
 
 def shipped_key() -> bytes:
-    source = (ROOT / "version.rkt").read_text(encoding="utf-8")
+    source = (ROOT / "racket/version.rkt").read_text(encoding="utf-8")
     key = re.search(
         r'\(define\s+regexmate-update-public-key-b64\s+"([A-Za-z0-9+/=]+)"\)',
         source,

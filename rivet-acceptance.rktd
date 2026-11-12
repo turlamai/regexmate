@@ -10,7 +10,7 @@
   . (#hasheq((id . core-contract)
              (kind . contract)
              (platforms . (windows macos linux))
-             (command . ("racket" "run-tests.rkt"))
+             (command . ("racket" "racket/run-tests.rkt"))
              (timeout-seconds . 900))
      #hasheq((id . embedded-wire)
              (kind . bridge)

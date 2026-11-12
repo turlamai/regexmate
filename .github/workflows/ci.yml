@@ -50,10 +50,10 @@ jobs:
         run: raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#v0.16.0' crypto
 
       - name: Compile
-        run: raco make main.rkt run-tests.rkt
+        run: raco make racket/main.rkt racket/run-tests.rkt
 
       - name: Unit tests
-        run: racket run-tests.rkt
+        run: racket racket/run-tests.rkt
 
 
       - name: Version metadata check
@@ -132,7 +132,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build
-          raco exe -o build/regexmate.exe main.rkt
+          raco exe -o build/regexmate.exe racket/main.rkt
           mkdir -p stage
           raco distribute stage/bin build/regexmate.exe
           test -f stage/bin/regexmate.exe

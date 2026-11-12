@@ -15,9 +15,9 @@
          "../core/linter.rkt"
          "../core/cookbook.rkt"
          "../core/i18n.rkt"
-         "../output/json-format.rkt"
-         "../output/human-format.rkt"
-         "../output/railroad.rkt")
+         "../output-format/json-format.rkt"
+         "../output-format/human-format.rkt"
+         "../output-format/railroad.rkt")
 
 (define PROTOCOL-VERSION "2024-11-05")
 

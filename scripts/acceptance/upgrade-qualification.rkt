@@ -47,8 +47,8 @@
                   update-artifact-size
                   update-manifest-version
                   verify-signed-manifest)
-         "../../core/updater.rkt"
-         "../../version.rkt")
+         "../../racket/core/updater.rkt"
+         "../../racket/version.rkt")
 
 (define (need name)
   (or (getenv name)

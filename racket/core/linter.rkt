@@ -23,7 +23,7 @@
       [else (loop (add1 k))])))
 
 ;; raw text of a node, for approximate source positions
-(require "../output/human-format.rkt") ; ast->raw lives with the explainers
+(require "../output-format/human-format.rkt") ; ast->raw lives with the explainers
 
 (struct warning (rule position severity args) #:transparent)
 

@@ -60,9 +60,9 @@ raco pkg install https://github.com/turlamai/regexmate.git
 ```bash
 git clone https://github.com/turlamai/regexmate
 cd regexmate
-raco make main.rkt
-racket run-tests.rkt          # test suite
-raco exe -o regexmate main.rkt  # produce your own binary
+raco make racket/main.rkt
+racket racket/run-tests.rkt          # test suite
+raco exe -o regexmate racket/main.rkt  # produce your own binary
 ```
 
 ## Quick start
@@ -189,7 +189,7 @@ Human output is English by default. `--lang zh` or the `REGEXMATE_LANG=zh` envir
 ## Development
 
 ```bash
-racket run-tests.rkt      # unit tests
+racket racket/run-tests.rkt  # unit tests
 bash scripts/smoke.sh     # CLI end-to-end smoke test
 racket scripts/check-version.rkt v1.0.0   # release gate
 ```
@@ -200,22 +200,23 @@ CI runs the unit tests and smoke test on Ubuntu, Windows and macOS against Racke
 
 ```
 regexmate/
-├── main.rkt                 # CLI entry point
-├── version.rkt              # runtime version (must match info.rkt)
+├── racket/                  # Racket engine + CLI
+│   ├── main.rkt             # CLI entry point
+│   ├── version.rkt          # runtime version (must match info.rkt)
+│   ├── run-tests.rkt        # test driver
+│   ├── core/                # regex AST, parser, engine, i18n
+│   ├── output-format/       # JSON envelopes, human output, ANSI, railroad
+│   └── server/mcp.rkt       # stdio MCP server
 ├── info.rkt                 # Racket package metadata
-├── core/                    # regex AST, parser, engine, i18n
-├── output/                  # JSON envelopes, human output, ANSI, railroad
-├── server/
-│   └── mcp.rkt              # stdio MCP server
 ├── app/
 │   └── backend.rkt          # Rivet backend (typed RPC surface for the GUIs)
 ├── macos-host/              # SwiftUI host (SwiftPM)
 ├── windows/                 # WinUI 3 host (C++/WinRT)
 ├── linux/                   # GTK4 host (CMake)
-├── branding/                # app icons (per-platform sources, .icns, .ico, .png)
+├── assets/branding/         # app icons (per-platform sources, .icns, .ico, .png)
 ├── tests/                   # rackunit suites
 ├── scripts/                 # smoke.sh, check-version.rkt
-├── docs/                    # product homepage (GitHub Pages)
+├── docs/                    # product guides and contracts
 └── .github/workflows/       # ci.yml, release.yml
 ```
 

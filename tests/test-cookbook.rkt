@@ -1,12 +1,12 @@
 #lang racket
 
 (require rackunit
-         "../core/cookbook.rkt"
-         "../core/regex-engine.rkt"
-         "../core/i18n.rkt"
-         "../core/linter.rkt"
-         "../output/human-format.rkt"
-         "../output/json-format.rkt")
+         "../racket/core/cookbook.rkt"
+         "../racket/core/regex-engine.rkt"
+         "../racket/core/i18n.rkt"
+         "../racket/core/linter.rkt"
+         "../racket/output-format/human-format.rkt"
+         "../racket/output-format/json-format.rkt")
 
 ;; The cookbook is teaching content, so the tests enforce the contract that
 ;; makes it trustworthy: every pattern compiles, every pattern matches its

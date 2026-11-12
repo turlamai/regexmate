@@ -1,7 +1,7 @@
 #lang racket
 
 (require rackunit
-         "../core/regex-engine.rkt")
+         "../racket/core/regex-engine.rkt")
 
 (define regex-engine-tests
   (test-suite
