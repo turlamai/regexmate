@@ -21,7 +21,7 @@
 
 namespace {
 
-// Brand tokens (docs/styles.css). Accent is fixed; neutrals come from the
+// Brand tokens (site/styles.css). Accent is fixed; neutrals come from the
 // theme via symbolic colors in the CSS below.
 constexpr char const* kAccent = "#037A55";
 constexpr char const* kDanger = "#D92D20";

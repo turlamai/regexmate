@@ -1,7 +1,7 @@
 # RegexMate DESIGN.md — 视觉与交互契约（单一真源）
 
 原型（`design/prototype/`）与三宿主实现（`macos-host/`、`windows/`、`linux/`）都遵循本文件；改视觉先改这里，再同步实现。
-Tokens 逐值提取自 `macos-host/Sources/RivetHost/DesignSystem.swift`（其上游是 `docs/styles.css` 家族站点体系，macOS 注释原文「Neutrals first, one accent, generous whitespace, hairline structure」），匹配高亮值取自 `ContentView.swift` 的 highlightColor；标注（推导）的值是原型为补齐实现尚未覆盖的状态所设，实现落地时回填实现。
+Tokens 逐值提取自 `macos-host/Sources/RivetHost/DesignSystem.swift`（其上游是 `site/styles.css` 家族站点体系，macOS 注释原文「Neutrals first, one accent, generous whitespace, hairline structure」），匹配高亮值取自 `ContentView.swift` 的 highlightColor；标注（推导）的值是原型为补齐实现尚未覆盖的状态所设，实现落地时回填实现。
 
 ## Brief（2026-11-11）
 

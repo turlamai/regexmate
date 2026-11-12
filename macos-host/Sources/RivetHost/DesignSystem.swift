@@ -1,7 +1,7 @@
 import SwiftUI
 import AppKit
 
-// The regexmate.design tokens from docs/styles.css, ported to SwiftUI:
+// The regexmate.design tokens from site/styles.css, ported to SwiftUI:
 // "Neutrals first, one accent, generous whitespace, hairline structure."
 enum RM {
     static let radiusL: CGFloat = 22

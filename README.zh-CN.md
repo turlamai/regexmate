@@ -31,7 +31,7 @@ RegexMate 提供确定性的正则校验、测试、解释与审查流程，并�
 
 ## 安装
 
-第一次接触？双语[用户手册](https://regexmate.jrtx.site/guide.html)用真实输出逐个讲每个命令——源文件在 [docs/guide.html](docs/guide.html)。
+第一次接触？双语[用户手册](https://regexmate.jrtx.site/guide.html)用真实输出逐个讲每个命令——源文件在 [site/guide.html](site/guide.html)。
 
 从 [Releases](https://github.com/turlamai/regexmate/releases/latest) 下载——每个平台都有人类安装器与便携压缩包，压缩包带 CLI 和原生桌面应用：
 
@@ -217,6 +217,7 @@ regexmate/
 ├── tests/                   # rackunit 测试套件
 ├── scripts/                 # smoke.sh、check-version.rkt
 ├── docs/                    # 产品指南与契约文档
+├── site/                    # 产品主页（GitHub Pages）
 └── .github/workflows/       # ci.yml、release.yml
 ```
 

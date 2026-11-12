@@ -44,7 +44,7 @@ Report problems in [GitHub Issues](https://github.com/turlamai/regexmate/issues)
 
 ## Further reading
 
-- [Command manual](../docs/guide.html)
+- [Command manual](../site/guide.html)
 - [Agent workflow](../docs/agents-guide.md)
 - [Project overview and development](../README.md)
 - [Current licence](../LICENSE)

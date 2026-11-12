@@ -3,7 +3,7 @@
 ## Use the product
 
 - [English user guide](USER-GUIDE.md) · [简体中文](USER-GUIDE.zh-CN.md): availability, installation, first use, data/recovery, network/privacy and support.
-- [Command manual](../docs/guide.html)
+- [Command manual](../site/guide.html)
 - [Agent workflow](../docs/agents-guide.md)
 
 ## Maintain the product

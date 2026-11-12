@@ -11,7 +11,7 @@ RegexMate——agent 时代的正则工作台（validate/match/explain/replace/g
 - `racket/` — Racket 引擎与 CLI：`racket/core/`（引擎核心）、`racket/output-format/`（JSON/人类输出/ANSI/铁路图）、`racket/server/`（MCP/服务侧）、`racket/main.rkt`（CLI 入口）、`racket/version.rkt`、`racket/run-tests.rkt`（测试驱动）
 - `app/` — Rivet backend（GUI 的 typed RPC 面）；`tests/` — Racket 测试
 - `macos-host/`（SwiftUI）、`windows/`（WinUI3）、`linux/`（GTK4）— 三宿主腿，对应平台机器独占开发
-- `scripts/`、`build/`、`assets/branding/`、`docs/`；`compiled/`、`dist/` 为本地产物不提交
+- `scripts/`、`build/`、`assets/branding/`、`docs/`、`site/`（官网，GitHub Pages）；`compiled/`、`dist/` 为本地产物不提交
 
 ## 常用命令
 

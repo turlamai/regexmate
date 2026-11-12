@@ -44,7 +44,7 @@ GUI 只读检查更新，实际安装由 CLI 执行。更新后退出并重启 G
 
 ## 深入阅读
 
-- [命令手册](../docs/guide.html)
+- [命令手册](../site/guide.html)
 - [Agent 工作流](../docs/agents-guide.md)
 - [项目说明与开发入口](../README.zh-CN.md)
 - [现行许可证](../LICENSE)

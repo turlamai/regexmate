@@ -31,7 +31,7 @@ Everything ships as a standalone binary — no Racket installation required on t
 
 ## Install
 
-New to the tool? The bilingual [user manual](https://regexmate.jrtx.site/guide.html) walks through every command with real output — source at [docs/guide.html](docs/guide.html).
+New to the tool? The bilingual [user manual](https://regexmate.jrtx.site/guide.html) walks through every command with real output — source at [site/guide.html](site/guide.html).
 
 Download from [Releases](https://github.com/turlamai/regexmate/releases/latest) — a human installer and a portable archive per platform, the archive carrying the CLI and the native desktop app:
 
@@ -217,6 +217,7 @@ regexmate/
 ├── tests/                   # rackunit suites
 ├── scripts/                 # smoke.sh, check-version.rkt
 ├── docs/                    # product guides and contracts
+├── site/                    # product homepage (GitHub Pages)
 └── .github/workflows/       # ci.yml, release.yml
 ```
 
