@@ -1,5 +1,7 @@
 # RegexMate
 
+**Product:** [Website](https://regexmate.jrtx.site/) · **Support:** [Issues & feedback](https://github.com/turlamai/regexmate/issues) · [Development policy](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.md)
+
 **The regex workbench for the agent era — validate, match, explain, replace, graph, batch-test and lint regular expressions from one cross-platform CLI.**
 Versioned JSON contract, a native MCP server, exit codes that never lie, and online self-update. Standalone binaries for Windows, Linux and macOS — no runtime to install. Racket underneath.
 
