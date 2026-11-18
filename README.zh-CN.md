@@ -1,5 +1,7 @@
 # RegexMate
 
+**产品：**[产品主页](https://regexmate.jrtx.site/) · **支持：**[问题与反馈](https://github.com/turlamai/regexmate/issues) · [当前交付策略](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.zh-CN.md)
+
 **为 agent 时代打造的正则工作台——用一条跨平台 CLI 完成正则的校验、匹配、解释、替换、绘图、批量测试与风险分析。**
 版本化 JSON 契约、原生 MCP server、永不撒谎的退出码、在线自更新。三平台独立二进制，免装运行时，Racket 实现。
 
