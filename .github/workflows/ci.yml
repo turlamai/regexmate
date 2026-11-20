@@ -47,7 +47,7 @@ jobs:
           variant: CS
 
       - name: Install Rivet (pinned) and crypto (updater dependency)
-        run: raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#179319936c6a22b2fa676c0fd557bcdb05ee5205' crypto
+        run: raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#c1f0d921e2136c0cfb2c1c1f6d273f2b26222a19' crypto
 
       - name: Compile
         run: raco make racket/main.rkt racket/run-tests.rkt
@@ -126,7 +126,7 @@ jobs:
           distribution: full
           variant: CS
       - name: Install pinned Rivet and crypto
-        run: raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#179319936c6a22b2fa676c0fd557bcdb05ee5205' crypto
+        run: raco pkg install --auto --no-docs 'https://github.com/turlamai/rivet.git#c1f0d921e2136c0cfb2c1c1f6d273f2b26222a19' crypto
       - name: Build the native Windows CLI distribution
         shell: bash
         run: |
